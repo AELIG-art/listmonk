@@ -11,10 +11,7 @@
 <form class="settings" @submit.prevent="onSubmit" x-data="settingsView(_settings, _userRoles, _listRoles)">
 		<header class="row page-header">
 			<div class="col-4">
-				<h1 class="page-title">
-					{{ .L.T "globals.terms.settings" }}
-					<span>({{ $d.Version }})</span>
-				</h1>
+				<h1 class="page-title">{{ .L.T "globals.terms.settings" }}</h1>
 			</div>
 			<div class="col-8 hstack justify-end buttons">
 				<div class="search-form settings-search">

@@ -109,7 +109,6 @@ type settingsView struct {
 	Settings  models.Settings
 	UserRoles []roleOption
 	ListRoles []roleOption
-	Version   string
 }
 
 // ViewSettings renders the HTML view for the settings form.
@@ -153,7 +152,6 @@ func (a *App) ViewSettings(c *echo.Context) error {
 		Settings:  s,
 		UserRoles: userRoles,
 		ListRoles: listRoles,
-		Version:   versionString,
 	}
 
 	return c.Render(http.StatusOK, "admin-settings", data)
