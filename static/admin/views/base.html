@@ -27,7 +27,7 @@
 	{{ if ne .FaviconURL "" }}
 		<link rel="icon" href="{{ .FaviconURL }}" type="image/x-icon" />
 	{{ else }}
-		<link rel="icon" href="{{ URI "/admin/static/favicon.png" }}?v={{ .AssetVersion }}" type="image/png" />
+		<link rel="icon" href="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" type="image/svg+xml" />
 	{{ end }}
 {{ end }}
 
@@ -36,7 +36,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>{{ .Data.Title }} - {{ .SiteName }}</title>
+	<title>{{ .Data.Title }} · AMS</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 	{{ template "admin-head-assets" . }}
 </head>
@@ -44,13 +44,9 @@
 	<div id="app" data-sidebar-layout>
 		<aside data-sidebar>
 			<header class="sidebar-branding">
-				<a href="{{ URI "/admin" }}"><img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="listmonk" /></a>
+				<a href="{{ URI "/admin" }}"><img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AMS</strong><small>AELIG Mailing System</small></span></a>
 			</header>
 			{{ template "admin-sidebar" . }}
-
-			<footer id="footer">
-				<span class="text-light text-8" title="Page render time">{{ .ReqDuration }}</span>
-			</footer>
 		</aside>
 
 		<main>
@@ -59,7 +55,7 @@
 					<button data-sidebar-toggle type="button" aria-label="Toggle sidebar menu" class="small">
 						{{ Icon "menu" }}
 					</button>
-					<a href="{{ URI "/admin" }}"><img src="{{ URI "/admin/static/favicon.png" }}?v={{ .AssetVersion }}" alt="listmonk" /></a>
+					<a href="{{ URI "/admin" }}"><img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="AMS" /></a>
 				</div>
 				{{ with .Data.Profile }}
 					<ot-dropdown>

@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
-	<title>{{ .Data.Title }} - {{ .SiteName }}</title>
+	<title>{{ .Data.Title }} · AMS</title>
 	<meta name="description" content="{{ .Data.Description }}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 	<meta name="color-scheme" content="light dark" />
@@ -32,7 +32,7 @@
 	{{ if ne .FaviconURL "" }}
 		<link rel="icon" href="{{ .FaviconURL }}" type="image/x-icon" />
 	{{ else }}
-		<link rel="icon" href="/public/static/favicon.png?v={{ .AssetVersion }}" type="image/png" />
+		<link rel="icon" href="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" type="image/svg+xml" />
 	{{ end }}
 </head>
 <body class="admin-public">
@@ -43,7 +43,7 @@
 				{{ if ne .LogoURL "" }}
 					<img src="{{ .LogoURL }}" alt="{{ .Data.Title }}" />
 				{{ else }}
-					<img src="/public/static/logo.svg?v={{ .AssetVersion }}" alt="{{ .Data.Title }}" />
+					<img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AMS</strong><small>AELIG Mailing System</small></span>
 				{{ end }}
 				</a>
 			</div>
@@ -53,12 +53,6 @@
 
 {{ define "admin-public-footer" }}
 	</div>
-	
-	<footer class="align-center text-light mt-6">
-		<small>
-		{{ L.T "public.poweredBy" }} <a target="_blank" rel="noreferrer" href="https://listmonk.app">listmonk</a>
-		</small>
-	</footer>
 	</div>
 </body>
 </html>

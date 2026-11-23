@@ -91,7 +91,6 @@ type adminTplData struct {
 	Lang               string
 	ConfigJS           serverConfig
 	I18nJS             json.RawMessage
-	ReqDuration        string
 	Data               any
 	L                  *i18n.I18n
 }
@@ -182,12 +181,6 @@ func (t *adminTplRenderer) Render(c *echo.Context, w io.Writer, name string, dat
 		return err
 	}
 
-	// Compute request duration.
-	var reqDuration string
-	if start, ok := c.Get("start_time").(time.Time); ok {
-		reqDuration = time.Since(start).Round(time.Microsecond).String()
-	}
-
 	return t.templates.ExecuteTemplate(w, name, adminTplData{
 		SiteName:           t.SiteName,
 		RootURL:            t.RootURL,
@@ -198,7 +191,6 @@ func (t *adminTplRenderer) Render(c *echo.Context, w io.Writer, name string, dat
 		Lang:               t.Lang,
 		ConfigJS:           configJS,
 		I18nJS:             app.adminI18nJS,
-		ReqDuration:        reqDuration,
 		Data:               data,
 		L:                  app.i18n,
 	})
