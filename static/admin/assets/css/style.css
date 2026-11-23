@@ -2045,6 +2045,14 @@ body.admin-public {
 
 
 @media (min-width: 770px) {
+    .card.has-table {
+        overflow: hidden;
+    }
+
+    .card.has-table .table-wrapper {
+        overflow-x: auto;
+    }
+
     #app[data-sidebar-layout] > main {
         box-sizing: border-box;
         width: 100%;
