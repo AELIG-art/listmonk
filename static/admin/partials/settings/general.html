@@ -40,6 +40,27 @@
 		</div>
 	</fieldset>
 
+    {{- $quota := .Data.Quota }}
+    <fieldset class="card" data-keywords="monthly quota emails limit usage mese mensile invii">
+        <legend>{{ .L.T "quota.title" }}</legend>
+        <label class="quota-switch">
+            {{ .L.T "quota.enable" }}
+            <input type="checkbox" role="switch" :checked="quotaEnabled"
+                {{ if ge $quota.Limit 0 }}checked{{ end }}
+                {{ if $quota.Locked }}disabled aria-describedby="quota-lock"{{ else }}@change="toggleQuota($event.target.checked)"{{ end }} />
+        </label>
+        {{ if $quota.Locked }}<small id="quota-lock" data-hint>{{ .L.T "quota.lock" }}</small>{{ end }}
+        <label data-field x-show="quotaEnabled" x-cloak>
+            {{ .L.T "quota.limit" }}
+            <input type="number" min="0" step="1" required x-model.number="form['app.monthly_email_limit']"
+                {{ if $quota.Locked }}disabled{{ else }}:disabled="!quotaEnabled"{{ end }} />
+            <small data-hint>{{ .L.T "quota.help" }}</small>
+        </label>
+        <p>{{ .L.T "quota.usage" }} <strong>{{ $quota.Used }} / {{ if lt $quota.Limit 0 }}∞{{ else }}{{ $quota.Limit }}{{ end }}</strong></p>
+        {{ if ge $quota.Limit 0 }}<progress aria-label="{{ .L.T "quota.usage" }}" value="{{ if eq $quota.Limit 0 }}1{{ else }}{{ $quota.Used }}{{ end }}" max="{{ if gt $quota.Limit 0 }}{{ $quota.Limit }}{{ else }}1{{ end }}"></progress>{{ end }}
+        <small data-hint>{{ .L.T "quota.reset" }} {{ $quota.Reset }} (UTC).</small>
+    </fieldset>
+
 	<fieldset class="card" data-keywords="from email address admin notification emails sender">
 		<legend>{{ .L.T "globals.fields.email" }}</legend>
 		<label data-field>
