@@ -78,7 +78,7 @@
 		</section>
 
 		<section class="row">
-			<div class="col-8">
+			<div class="col-12">
 				<article class="card">
 					<h2 class="card-title">{{ .L.Ts "globals.terms.recent" "name" ((.L.T "globals.terms.campaigns") | lower) }}</h2>
 					<div class="table-wrapper">
@@ -114,30 +114,6 @@
 							</tbody>
 						</table>
 					</div>
-				</article>
-			</div>
-
-			<div class="col-4">
-				{{- $s := $d.System -}}
-				<article class="card">
-					<h2 class="card-title">{{ Icon "activity" }} {{ .L.T "globals.terms.system" }}</h2>
-					<dl class="vstack gap-4">
-						<div class="hstack justify-between"><dt>{{ .L.T "dashboard.uptime" }}</dt><dd class="text-light">{{ $s.Uptime }}</dd></div>
-						<div class="hstack justify-between"><dt>{{ .L.T "dashboard.appMemory" }}</dt><dd class="text-light">{{ FormatNumber (int $s.AppMemMB) }} MB</dd></div>
-						{{- if $s.HasHostMem }}
-						<div class="vstack gap-1">
-							<dt class="hstack justify-between">{{ .L.T "dashboard.systemMemory" }}<span class="text-light">{{ FormatNumber (int $s.MemUsedMB) }} / {{ FormatNumber (int $s.MemTotalMB) }} MB</span></dt>
-							<dd><meter min="0" max="100" value="{{ $s.MemPct }}" optimum="30" low="70" high="90" title="{{ $s.MemPct }}%"></meter></dd>
-						</div>
-						{{- end }}
-						{{- if $s.HasLoad }}
-						<div class="vstack gap-1">
-							<dt class="hstack justify-between">{{ .L.T "dashboard.cpuLoad" }}<span class="text-light">{{ $s.Load1 }} / {{ $s.Load5 }} / {{ $s.Load15 }}</span></dt>
-							<dd><meter min="0" max="100" value="{{ $s.LoadPct }}" optimum="30" low="70" high="90" title="{{ $s.LoadPct }}%"></meter></dd>
-						</div>
-						{{- end }}
-						<div class="hstack justify-between"><dt>{{ .L.T "dashboard.cpuCores" }}</dt><dd class="text-light">{{ $s.NumCPU }}</dd></div>
-					</dl>
 				</article>
 			</div>
 		</section>

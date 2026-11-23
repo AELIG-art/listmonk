@@ -4,10 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"net/http"
-	"os"
-	"runtime"
-	"strconv"
-	"strings"
 	"time"
 
 	"github.com/jmoiron/sqlx/types"
@@ -18,9 +14,6 @@ import (
 
 // dashboardCampaignCount is the number of recent campaigns to show on the dashboard.
 const dashboardCampaignCount = 6
-
-// processStartedAt starts process start time to compute uptime.
-var processStartedAt = time.Now()
 
 // dashboardCounts contains stats to render on the dashboard.
 type dashboardCounts struct {
@@ -46,30 +39,11 @@ type dashboardCounts struct {
 	Messages int `json:"messages"`
 }
 
-// systemStats holds system metrics.
-type systemStats struct {
-	Uptime   string
-	NumCPU   int
-	AppMemMB uint64
-
-	HasHostMem bool
-	MemUsedMB  uint64
-	MemTotalMB uint64
-	MemPct     int
-
-	HasLoad bool
-	Load1   string
-	Load5   string
-	Load15  string
-	LoadPct int
-}
-
 type dashboardView struct {
 	adminView
 	Counts           dashboardCounts
 	Charts           types.JSONText
 	Campaigns        models.Campaigns
-	System           systemStats
 	CacheSlowQueries bool
 }
 
@@ -102,7 +76,6 @@ func (a *App) ViewDashboard(c *echo.Context) error {
 		Counts:           cnt,
 		Charts:           charts,
 		Campaigns:        camps,
-		System:           getSystemStats(),
 		CacheSlowQueries: ko.Bool("app.cache_slow_queries"),
 	}
 
@@ -160,108 +133,6 @@ func (a *App) getDashboardCampaigns(c *echo.Context) (models.Campaigns, error) {
 	}
 
 	return camps, nil
-}
-
-// getSystemStats collects host and runtime stats.
-func getSystemStats() systemStats {
-	s := systemStats{
-		Uptime: niceDuration(time.Since(processStartedAt)),
-		NumCPU: runtime.NumCPU(),
-	}
-
-	// Process memory (RSS on Linux, otherwise memory reserved by the Go runtime).
-	if rss, ok := readProcRSS(); ok {
-		s.AppMemMB = rss / 1024 / 1024
-	} else {
-		var m runtime.MemStats
-		runtime.ReadMemStats(&m)
-		s.AppMemMB = m.Sys / 1024 / 1024
-	}
-
-	if total, avail, ok := readMemInfo(); ok && total > 0 {
-		used := total - avail
-		s.HasHostMem = true
-		s.MemUsedMB = used / 1024 / 1024
-		s.MemTotalMB = total / 1024 / 1024
-		s.MemPct = int(float64(used) / float64(total) * 100)
-	}
-
-	if l1, l5, l15, ok := readLoadAvg(); ok {
-		s.HasLoad = true
-		s.Load1 = fmt.Sprintf("%.2f", l1)
-		s.Load5 = fmt.Sprintf("%.2f", l5)
-		s.Load15 = fmt.Sprintf("%.2f", l15)
-		s.LoadPct = min(int(l1/float64(s.NumCPU)*100), 100)
-	}
-
-	return s
-}
-
-// readProcRSS returns current process RSS bytes from /proc/self/status. Linux only.
-func readProcRSS() (uint64, bool) {
-	b, err := os.ReadFile("/proc/self/status")
-	if err != nil {
-		return 0, false
-	}
-
-	for _, ln := range strings.Split(string(b), "\n") {
-		if f := strings.Fields(ln); len(f) >= 2 && f[0] == "VmRSS:" {
-			kb, _ := strconv.ParseUint(f[1], 10, 64)
-			return kb * 1024, true
-		}
-	}
-
-	return 0, false
-}
-
-// readMemInfo returns total and available system memory bytes from /proc/meminfo. Linux-only.
-func readMemInfo() (uint64, uint64, bool) {
-	b, err := os.ReadFile("/proc/meminfo")
-	if err != nil {
-		return 0, 0, false
-	}
-
-	var (
-		total, avail       uint64
-		hasTotal, hasAvail bool
-	)
-	for _, ln := range strings.Split(string(b), "\n") {
-		f := strings.Fields(ln)
-		if len(f) < 2 {
-			continue
-		}
-
-		kb, _ := strconv.ParseUint(f[1], 10, 64)
-		switch f[0] {
-		case "MemTotal:":
-			total, hasTotal = kb*1024, true
-		case "MemAvailable:":
-			avail, hasAvail = kb*1024, true
-		}
-	}
-
-	return total, avail, hasTotal && hasAvail
-}
-
-// readLoadAvg returns CPU load avg from /proc/loadavg. Linux-only.
-func readLoadAvg() (float64, float64, float64, bool) {
-	b, err := os.ReadFile("/proc/loadavg")
-	if err != nil {
-		return 0, 0, 0, false
-	}
-
-	f := strings.Fields(string(b))
-	if len(f) < 3 {
-		return 0, 0, 0, false
-	}
-
-	var (
-		l1, _  = strconv.ParseFloat(f[0], 64)
-		l5, _  = strconv.ParseFloat(f[1], 64)
-		l15, _ = strconv.ParseFloat(f[2], 64)
-	)
-
-	return l1, l5, l15, true
 }
 
 // niceDuration formats duration to human-readable string, eg: 1h, 3s etc.
