@@ -26,6 +26,7 @@ import (
 	"github.com/knadh/listmonk/internal/manager"
 	"github.com/knadh/listmonk/internal/media"
 	"github.com/knadh/listmonk/internal/messenger/email"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/internal/subimporter"
 	"github.com/knadh/listmonk/internal/throttle"
 	"github.com/knadh/listmonk/models"
@@ -35,6 +36,7 @@ import (
 
 // App contains the "global" shared components, controllers and fields.
 type App struct {
+	quota      *quota.Store
 	cfg        *Config
 	urlCfg     *UrlConfig
 	fs         stuffbin.FileSystem
@@ -204,6 +206,10 @@ func init() {
 }
 
 func main() {
+	monthly, err := quota.New(db.DB)
+	if err != nil {
+		lo.Fatal(err)
+	}
 	var (
 		// Initialize static global config.
 		cfg = initConstConfig(ko)
@@ -223,10 +229,10 @@ func main() {
 		core = initCore(fbOptinNotify, queries, db, i18n, ko)
 
 		// Initialize all messengers, SMTP and postback.
-		msgrs = append(initSMTPMessengers(), initPostbackMessengers(ko)...)
+		msgrs = append(initSMTPMessengers(monthly), initPostbackMessengers(ko)...)
 
 		// Campaign manager.
-		mgr = initCampaignManager(msgrs, queries, urlCfg, core, media, i18n, ko)
+		mgr = initCampaignManager(monthly, msgrs, queries, urlCfg, core, media, i18n, ko)
 
 		// Bulk importer.
 		importer = initImporter(queries, db, core, i18n, ko)
@@ -277,6 +283,7 @@ func main() {
 	// =========================================================================
 	// Initialize the App{} with all the global shared components, controllers and fields.
 	app := &App{
+		quota:      monthly,
 		cfg:        cfg,
 		urlCfg:     urlCfg,
 		fs:         fs,

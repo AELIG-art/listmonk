@@ -5,6 +5,8 @@ import (
 	"github.com/knadh/listmonk/internal/core"
 	"github.com/knadh/listmonk/internal/manager"
 	"github.com/knadh/listmonk/internal/media"
+	"github.com/knadh/listmonk/internal/messenger/email"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/models"
 	"github.com/lib/pq"
 )
@@ -12,6 +14,8 @@ import (
 // store implements DataSource over the primary
 // database.
 type store struct {
+	quota   *quota.Store
+	smtp    map[string]bool
 	queries *models.Queries
 	core    *core.Core
 	media   media.Store
@@ -24,8 +28,15 @@ type runningCamp struct {
 	ListID          int    `db:"list_id"`
 }
 
-func newManagerStore(q *models.Queries, c *core.Core, m media.Store) *store {
+func newManagerStore(q *models.Queries, c *core.Core, m media.Store, monthly *quota.Store, msgrs []manager.Messenger) *store {
+	smtp := map[string]bool{}
+	for _, m := range msgrs {
+		if _, ok := m.(*email.Emailer); ok {
+			smtp[m.Name()] = true
+		}
+	}
 	return &store{
+		quota: monthly, smtp: smtp,
 		queries: q,
 		core:    c,
 		media:   m,
@@ -38,7 +49,30 @@ func newManagerStore(q *models.Queries, c *core.Core, m media.Store) *store {
 func (s *store) NextCampaigns(currentIDs []int64, sentCounts []int64, lastSubIDs []int64) ([]*models.Campaign, error) {
 	var out []*models.Campaign
 	err := s.queries.NextCampaigns.Select(&out, pq.Int64Array(currentIDs), pq.Int64Array(sentCounts), pq.Int64Array(lastSubIDs))
-	return out, err
+	if err != nil || len(out) == 0 {
+		return out, err
+	}
+	usage, err := s.quota.Snapshot()
+	if err != nil {
+		return nil, err
+	}
+	ready := out[:0]
+	for _, c := range out {
+		if s.smtp[c.Messenger] {
+			blocked, err := s.quota.BlocksCampaign(c.ID, usage)
+			if err != nil {
+				return nil, err
+			}
+			if blocked {
+				if err := s.UpdateCampaignStatus(c.ID, models.CampaignStatusPaused); err != nil {
+					return nil, err
+				}
+				continue
+			}
+		}
+		ready = append(ready, c)
+	}
+	return ready, nil
 }
 
 // NextSubscribers retrieves a subset of subscribers of a given campaign.

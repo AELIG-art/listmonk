@@ -1,4 +1,11 @@
 {
+    "quota.title": "Monthly email quota",
+    "quota.limit": "Maximum emails per month",
+    "quota.help": "Set −1 for unlimited sending, or 0 to pause all email delivery.",
+    "quota.lock": "Managed by the MAX_QUOTA environment variable.",
+    "quota.usage": "Emails used this month",
+    "quota.reset": "Usage resets on the first of next month,",
+    "quota.blocked": "This campaign exceeds the remaining monthly email quota.",
     "_.code": "en",
     "_.name": "English (en)",
     "_.date_long": "January 02, 2006",

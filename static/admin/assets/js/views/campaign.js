@@ -43,6 +43,7 @@ function component(camp, sel) {
 
   return {
     isNew,
+    quotaBlocked: !!c.quota_blocked,
     isHeadersVisible: Array.isArray(c.headers) && c.headers.length > 0,
     activeTab: 'campaign',
     contentReady: false,
@@ -303,6 +304,7 @@ function component(camp, sel) {
 
       const d = await api('campaigns', `/campaigns/${this.form.id}`, 'PUT', p);
       this._saved = true;
+      this.quotaBlocked = !!d.quota_blocked;
       this.form.archive_slug = d.archive_slug || this.form.archive_slug;
       u.toast(i18n.ts('globals.messages.updated', { name: d.name }));
     },
@@ -328,6 +330,10 @@ function component(camp, sel) {
 
       const status = this.canStart ? 'running' : 'scheduled';
       await this.onSave();
+      if (status === 'running' && this.quotaBlocked) {
+        u.toast(i18n.t('quota.blocked'));
+        return;
+      }
       await api('campaigns', `/campaigns/${this.form.id}/status`, 'PUT', { status });
       u.redirect(`${urls.admin}/campaigns`, { message: i18n.ts('globals.messages.statusChanged', { name: this.form.name, status: i18n.t(`globals.terms.${status}`) }) });
     },

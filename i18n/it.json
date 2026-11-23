@@ -1,4 +1,11 @@
 {
+    "quota.title": "Quota email mensile",
+    "quota.limit": "Numero massimo di email al mese",
+    "quota.help": "Imposta −1 per invii illimitati o 0 per sospendere tutti gli invii email.",
+    "quota.lock": "Gestito dalla variabile di ambiente MAX_QUOTA.",
+    "quota.usage": "Email utilizzate questo mese",
+    "quota.reset": "Il conteggio riparte il primo del mese prossimo,",
+    "quota.blocked": "La campagna supera la quota email mensile residua.",
     "_.code": "it",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

@@ -52,6 +52,7 @@ import (
 	"github.com/knadh/listmonk/internal/messenger/email"
 	"github.com/knadh/listmonk/internal/messenger/postback"
 	"github.com/knadh/listmonk/internal/notifs"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/internal/subimporter"
 	"github.com/knadh/listmonk/internal/urlsign"
 	"github.com/knadh/listmonk/models"
@@ -687,7 +688,7 @@ func initCore(fnNotify func(sub models.Subscriber, listIDs []int) (int, error), 
 }
 
 // initCampaignManager initializes the campaign manager.
-func initCampaignManager(msgrs []manager.Messenger, q *models.Queries, u *UrlConfig, co *core.Core, md media.Store, i *i18n.I18n, ko *koanf.Koanf) *manager.Manager {
+func initCampaignManager(monthly *quota.Store, msgrs []manager.Messenger, q *models.Queries, u *UrlConfig, co *core.Core, md media.Store, i *i18n.I18n, ko *koanf.Koanf) *manager.Manager {
 	if ko.Bool("passive") {
 		lo.Println("running in passive mode. won't process campaigns.")
 	}
@@ -714,7 +715,7 @@ func initCampaignManager(msgrs []manager.Messenger, q *models.Queries, u *UrlCon
 		SlidingWindowRate:     ko.Int("app.message_sliding_window_rate"),
 		ScanInterval:          time.Second * 5,
 		ScanCampaigns:         !ko.Bool("passive"),
-	}, newManagerStore(q, co, md), i, u.Signer, lo)
+	}, newManagerStore(q, co, md, monthly, msgrs), i, u.Signer, lo)
 
 	// Attach all messengers to the campaign manager.
 	for _, m := range msgrs {
@@ -765,7 +766,7 @@ func initImporter(q *models.Queries, db *sqlx.DB, core *core.Core, i *i18n.I18n,
 }
 
 // initSMTPMessenger initializes the combined and individual SMTP messengers.
-func initSMTPMessengers() []manager.Messenger {
+func initSMTPMessengers(monthly *quota.Store) []manager.Messenger {
 	var (
 		servers = []email.Server{}
 		out     = []manager.Messenger{}
@@ -795,7 +796,7 @@ func initSMTPMessengers() []manager.Messenger {
 		// If the server has a name, initialize it as a standalone e-mail messenger
 		// allowing campaigns to select individual SMTPs. In the UI and config, it'll appear as `email / $name`.
 		if s.Name != "" {
-			msgr, err := email.New(s.Name, s)
+			msgr, err := email.New(monthly, s.Name, s)
 			if err != nil {
 				lo.Fatalf("error initializing e-mail messenger: %v", err)
 			}
@@ -808,7 +809,7 @@ func initSMTPMessengers() []manager.Messenger {
 	}
 
 	// Initialize the 'email' messenger with the default SMTP servers.
-	msgr, err := email.New(email.MessengerName, servers...)
+	msgr, err := email.New(monthly, email.MessengerName, servers...)
 	if err != nil {
 		lo.Fatalf("error initializing e-mail messenger: %v", err)
 	}

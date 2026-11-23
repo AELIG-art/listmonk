@@ -31,6 +31,8 @@ Generate a public domain for the Listmonk service and open it to set up the admi
 
 For cross-origin requests, set `LISTMONK_ORIGIN_0` through `LISTMONK_ORIGIN_4` to the allowed origins, such as `https://www.example.com`, without trailing slashes. To persist media stored on the filesystem, mount a [Railway volume](https://docs.railway.com/volumes) at `/listmonk/uploads`.
 
+Configure the monthly SMTP message limit in **Settings → Performance**, or set `MAX_QUOTA` on the Railway application service to enforce a read-only limit. Each successful SMTP submission uses one slot, including campaign, test, and transactional messages. Counting starts with this upgrade and resets on the first of each month at 00:00 UTC. The default setting (`-1`) allows unlimited sending. `MAX_QUOTA` accepts nonnegative integers, including `0` to suspend email delivery.
+
 ### Docker
 
 The latest image is available on DockerHub at [`listmonk/listmonk:latest`](https://hub.docker.com/r/listmonk/listmonk/tags?page=1&ordering=last_updated&name=latest).

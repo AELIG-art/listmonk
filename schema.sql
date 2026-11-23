@@ -224,6 +224,8 @@ DROP INDEX IF EXISTS idx_clicks_date; CREATE INDEX idx_clicks_date ON link_click
 
 -- settings
 DROP TABLE IF EXISTS settings CASCADE;
+CREATE TABLE IF NOT EXISTS email_monthly_usage (month DATE PRIMARY KEY, used BIGINT NOT NULL CHECK (used >= 0));
+
 CREATE TABLE settings (
     key             TEXT NOT NULL UNIQUE,
     value           JSONB NOT NULL DEFAULT '{}',
@@ -241,6 +243,7 @@ INSERT INTO settings (key, value) VALUES
     ('app.message_rate', '10'),
     ('app.batch_size', '1000'),
     ('app.max_send_errors', '1000'),
+    ('app.monthly_email_limit', '-1'),
     ('app.message_sliding_window', 'false'),
     ('app.message_sliding_window_duration', '"1h"'),
     ('app.message_sliding_window_rate', '10000'),

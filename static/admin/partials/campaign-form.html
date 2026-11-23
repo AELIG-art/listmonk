@@ -108,8 +108,9 @@
 		<footer class="hstack justify-end mt-6">
 			{{- if $canSend }}
 				<div class="hstack justify-end gap-1">
-					<template x-if="canStart">
-						<button type="button" data-variant="primary" @click="onStart">{{ Icon "send" }} {{ $root.L.T "campaigns.start" }}</button>
+					<small data-hint x-cloak x-show="canStart && quotaBlocked">{{ $root.L.T "quota.blocked" }}</small>
+                    <template x-if="canStart">
+						<button type="button" data-variant="primary" :disabled="quotaBlocked" @click="onStart">{{ Icon "send" }} {{ $root.L.T "campaigns.start" }}</button>
 					</template>
 				</div>
 			{{- end }}

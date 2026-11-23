@@ -1,5 +1,17 @@
 {{ define "settings-performance" -}}
 <div class="settings-items">
+    {{- $quota := .Data.Quota }}
+    <fieldset class="card" data-keywords="monthly quota emails limit usage mese mensile invii">
+        <legend>{{ .L.T "quota.title" }}</legend>
+        <label data-field>
+            {{ .L.T "quota.limit" }}
+            <input type="number" min="-1" step="1" required x-model.number="form['app.monthly_email_limit']" {{ if $quota.Locked }}disabled{{ end }} />
+            <small data-hint>{{ if $quota.Locked }}{{ .L.T "quota.lock" }}{{ else }}{{ .L.T "quota.help" }}{{ end }}</small>
+        </label>
+        <p>{{ .L.T "quota.usage" }} <strong>{{ $quota.Used }} / {{ if lt $quota.Limit 0 }}∞{{ else }}{{ $quota.Limit }}{{ end }}</strong></p>
+        {{ if ge $quota.Limit 0 }}<progress aria-label="{{ .L.T "quota.usage" }}" value="{{ if eq $quota.Limit 0 }}1{{ else }}{{ $quota.Used }}{{ end }}" max="{{ if gt $quota.Limit 0 }}{{ $quota.Limit }}{{ else }}1{{ end }}"></progress>{{ end }}
+        <small data-hint>{{ .L.T "quota.reset" }} {{ $quota.Reset }} (UTC).</small>
+    </fieldset>
 	<fieldset class="card" data-keywords="performance concurrency message rate batch size errors threshold throughput sending speed workers">
 		<legend>{{ .L.T "globals.terms.performance" }}</legend>
 		<label data-field>

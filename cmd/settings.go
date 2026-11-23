@@ -24,6 +24,7 @@ import (
 	"github.com/knadh/listmonk/internal/auth"
 	"github.com/knadh/listmonk/internal/messenger/email"
 	"github.com/knadh/listmonk/internal/notifs"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/models"
 	"github.com/labstack/echo/v5"
 )
@@ -63,6 +64,9 @@ func (a *App) GetSettings(c *echo.Context) error {
 		return err
 	}
 
+	if limit := a.quota.Override(); limit != nil {
+		s.MonthlyEmailLimit = limit
+	}
 	maskSettings(&s)
 
 	return c.JSON(http.StatusOK, okResp{s})
@@ -101,6 +105,7 @@ type roleOption struct {
 type settingsView struct {
 	adminView
 
+	Quota     quota.Snapshot
 	Settings  models.Settings
 	UserRoles []roleOption
 	ListRoles []roleOption
@@ -112,6 +117,9 @@ func (a *App) ViewSettings(c *echo.Context) error {
 	s, err := a.core.GetSettings()
 	if err != nil {
 		return err
+	}
+	if limit := a.quota.Override(); limit != nil {
+		s.MonthlyEmailLimit = limit
 	}
 	maskSettings(&s)
 
@@ -135,7 +143,12 @@ func (a *App) ViewSettings(c *echo.Context) error {
 		}
 	}
 
+	usage, err := a.quota.Snapshot()
+	if err != nil {
+		return err
+	}
 	data := settingsView{
+		Quota:     usage,
 		adminView: newAdminView(c, a.i18n.T("globals.terms.settings"), "", "settings.all"),
 		Settings:  s,
 		UserRoles: userRoles,
@@ -154,6 +167,16 @@ func (a *App) UpdateSettings(c *echo.Context) error {
 		return err
 	}
 
+	if n := set.MonthlyEmailLimit; n != nil {
+		if cap := a.quota.Override(); cap != nil {
+			if *n != *cap {
+				return echo.NewHTTPError(http.StatusForbidden, "Monthly quota is managed by MAX_QUOTA")
+			}
+			set.MonthlyEmailLimit = nil
+		} else if *n < -1 {
+			return echo.NewHTTPError(http.StatusBadRequest, "Invalid monthly quota")
+		}
+	}
 	if err := validateUploadMaxFileSize(set.UploadMaxFileSize); err != nil {
 		return err
 	}
@@ -414,6 +437,15 @@ func (a *App) UpdateSettingsByKey(c *echo.Context) error {
 		return err
 	}
 
+	if key == quota.Key {
+		if a.quota.Override() != nil {
+			return echo.NewHTTPError(http.StatusForbidden, "Monthly quota is managed by MAX_QUOTA")
+		}
+		var n *int64
+		if err := json.Unmarshal(b, &n); err != nil || n == nil || *n < -1 {
+			return echo.NewHTTPError(http.StatusBadRequest, "Invalid monthly quota")
+		}
+	}
 	if key == "upload.max_file_size" {
 		var size int64
 		if err := json.Unmarshal(b, &size); err != nil {
@@ -545,7 +577,7 @@ func (a *App) TestSMTPSettings(c *echo.Context) error {
 	req.MaxConns = 1
 	req.IdleTimeout = time.Second * 2
 	req.PoolWaitTimeout = time.Second * 2
-	msgr, err := email.New("", req)
+	msgr, err := email.New(a.quota, "", req)
 	if err != nil {
 		return echo.NewHTTPError(http.StatusBadRequest,
 			a.i18n.Ts("globals.messages.errorCreating", "name", "SMTP", "error", err.Error()))

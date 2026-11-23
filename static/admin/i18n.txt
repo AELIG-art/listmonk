@@ -104,3 +104,5 @@ globals.terms.finished
 globals.terms.paused
 globals.terms.running
 globals.terms.scheduled
+
+quota.blocked

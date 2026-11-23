@@ -23,6 +23,7 @@ import (
 	"github.com/Masterminds/sprig/v3"
 	"github.com/knadh/listmonk/internal/i18n"
 	"github.com/knadh/listmonk/internal/notifs"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/internal/urlsign"
 	"github.com/knadh/listmonk/models"
 	"golang.org/x/text/cases"
@@ -601,7 +602,11 @@ func (m *Manager) worker() {
 				if err != nil {
 					// Call the error callback, which keeps track of the error count
 					// and stops the campaign if the error count exceeds the threshold.
-					msg.pipe.OnError()
+					if errors.Is(err, quota.ErrLimited) || errors.Is(err, quota.ErrAccounting) {
+						msg.pipe.Stop(true)
+					} else {
+						msg.pipe.OnError()
+					}
 				} else {
 					msg.pipe.rate.Incr(1)
 					msg.pipe.sent.Add(1)

@@ -16,6 +16,7 @@ import (
 	"github.com/knadh/listmonk/internal/auth"
 	"github.com/knadh/listmonk/internal/messenger/email"
 	"github.com/knadh/listmonk/internal/notifs"
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/models"
 	"github.com/labstack/echo/v5"
 	"github.com/lib/pq"
@@ -85,6 +86,32 @@ type campaignView struct {
 	Analytics       *analyticsData
 }
 
+// markCampaignQuota checks the audience for actions that can start delivery.
+func (a *App) markCampaignQuota(c *models.Campaign, v quota.Snapshot) error {
+	if v.Limit < 0 || (c.Status != models.CampaignStatusDraft && c.Status != models.CampaignStatusPaused) {
+		return nil
+	}
+	for _, m := range a.messengers {
+		if m.Name() == c.Messenger {
+			if _, ok := m.(*email.Emailer); ok {
+				blocked, err := a.quota.BlocksCampaign(c.ID, v)
+				c.QuotaBlocked = blocked
+				return err
+			}
+			break
+		}
+	}
+	return nil
+}
+
+func (a *App) refreshCampaignQuota(c *models.Campaign) error {
+	v, err := a.quota.Snapshot()
+	if err != nil {
+		return err
+	}
+	return a.markCampaignQuota(c, v)
+}
+
 // ViewNewCampaign renders the new campaign page (only the "campaign" tab).
 func (a *App) ViewNewCampaign(c *echo.Context) error {
 	var tpls []models.Template
@@ -140,6 +167,10 @@ func (a *App) ViewCampaign(c *echo.Context) error {
 
 	camp, err := a.core.GetCampaign(id, "", "")
 	if err != nil {
+		return err
+	}
+
+	if err := a.refreshCampaignQuota(&camp); err != nil {
 		return err
 	}
 
@@ -275,8 +306,15 @@ func (a *App) getViewCampaigns(c *echo.Context, listIDs ...int) ([]models.Campai
 		return nil, models.PageProps{}, err
 	}
 
+	usage, err := a.quota.Snapshot()
+	if err != nil {
+		return nil, models.PageProps{}, err
+	}
 	// The list view doesn't need campaign bodies.
 	for i := range res {
+		if err := a.markCampaignQuota(&res[i], usage); err != nil {
+			return nil, models.PageProps{}, err
+		}
 		res[i].Body = ""
 		res[i].BodySource.Valid = false
 	}
@@ -584,6 +622,9 @@ func (a *App) UpdateCampaign(c *echo.Context) error {
 		return err
 	}
 
+	if err := a.refreshCampaignQuota(&out); err != nil {
+		return err
+	}
 	return c.JSON(http.StatusOK, okResp{out})
 }
 
@@ -604,6 +645,18 @@ func (a *App) UpdateCampaignStatus(c *echo.Context) error {
 		return err
 	}
 
+	if req.Status == models.CampaignStatusRunning {
+		camp, err := a.core.GetCampaign(id, "", "")
+		if err != nil {
+			return err
+		}
+		if err := a.refreshCampaignQuota(&camp); err != nil {
+			return err
+		}
+		if camp.QuotaBlocked {
+			return echo.NewHTTPError(http.StatusConflict, a.i18n.T("quota.blocked"))
+		}
+	}
 	// Update the campaign status in the DB.
 	out, err := a.core.UpdateCampaignStatus(id, req.Status)
 	if err != nil {

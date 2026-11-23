@@ -61,6 +61,7 @@ type CampaignMedia struct {
 
 // Campaign represents an e-mail campaign.
 type Campaign struct {
+	QuotaBlocked bool `db:"-" json:"quota_blocked,omitempty"`
 	Base
 	CampaignMeta
 

@@ -9,6 +9,7 @@ import (
 	"net/textproto"
 	"strings"
 
+	"github.com/knadh/listmonk/internal/quota"
 	"github.com/knadh/listmonk/internal/utils"
 	"github.com/knadh/listmonk/models"
 	"github.com/knadh/smtppool/v2"
@@ -45,7 +46,8 @@ type Server struct {
 
 // Emailer is the SMTP e-mail messenger.
 type Emailer struct {
-	name string
+	quota *quota.Store
+	name  string
 
 	// pools holds groups of SMTP servers indexed by a key ('from'-address
 	// or a domain set per SMTPs server). An empty key holds all servers
@@ -61,9 +63,10 @@ func NormalizeAddr(s string) string {
 // New returns an SMTP e-mail Messenger backend with the given SMTP servers.
 // Group indicates whether the messenger represents a group of SMTP servers (1 or more)
 // that are used as a round-robin pool, or a single server.
-func New(name string, servers ...Server) (*Emailer, error) {
+func New(q *quota.Store, name string, servers ...Server) (*Emailer, error) {
 	e := &Emailer{
 		name:  name,
+		quota: q,
 		pools: make(map[string][]*Server),
 	}
 
@@ -223,7 +226,7 @@ func (e *Emailer) Push(m models.Message) error {
 		}
 	}
 
-	return srv.pool.Send(em)
+	return e.quota.Send(func() error { return srv.pool.Send(em) })
 }
 
 // Flush flushes the message queue to the server.
