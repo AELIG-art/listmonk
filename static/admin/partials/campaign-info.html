@@ -2,8 +2,8 @@
 {{- $d := .Data -}}
 {{- $c := $d.Campaign -}}
 <div class="vstack gap-6">
-	<div class="card float">
-		<h5 class="title">{{ .L.Tc "globals.terms.campaign" 1 }}</h5>
+	<div class="card">
+		<h5 class="card-title">{{ .L.Tc "globals.terms.campaign" 1 }}</h5>
 		<div class="row">
 			<div class="col-4">
 				<div>{{ $c.Subject }}</div>
@@ -41,8 +41,8 @@
 	<section class="row">
 		{{ range list (dict "Key" "sent" "Count" $c.Sent) (dict "Key" "views" "Count" $c.Views) (dict "Key" "clicks" "Count" $c.Clicks) (dict "Key" "bounces" "Count" $c.Bounces) }}
 		<div class="col-3">
-			<article class="card float stat-card">
-				<h4 class="title">{{ $.L.T (printf "globals.terms.%s" .Key) }}</h4>
+			<article class="card stat-card">
+				<h4 class="card-title">{{ $.L.T (printf "globals.terms.%s" .Key) }}</h4>
 				<div class="stat-value">
 					{{ if eq .Key "sent" }}
 						{{ FormatNumber .Count }}
@@ -59,8 +59,8 @@
 	<section class="row">
 		{{ range list (dict "Key" "views" "Rows" $d.Analytics.Views) (dict "Key" "clicks" "Rows" $d.Analytics.Clicks) }}
 		<div class="col-6">
-			<article class="card float">
-				<h5 class="title">{{ $.L.T (printf "globals.terms.%s" .Key) }}</h5>
+			<article class="card">
+				<h5 class="card-title">{{ $.L.T (printf "globals.terms.%s" .Key) }}</h5>
 				{{ if .Rows }}
 				<div class="chart-box"><canvas id="chart-{{ .Key }}" role="img" aria-label="{{ $.L.T (printf "globals.terms.%s" .Key) }}"></canvas></div>
 				{{ else }}
@@ -70,8 +70,8 @@
 		</div>
 		{{ end }}
 	</section>
-	<article class="card float">
-		<h4 class="title">{{ .L.T "globals.terms.links" }}</h4>
+	<article class="card">
+		<h4 class="card-title">{{ .L.T "globals.terms.links" }}</h4>
 		{{ if $d.Analytics.Links }}
 			<div class="chart-box"><canvas id="chart-links" role="img" aria-label="{{ .L.T "globals.terms.links" }}"></canvas></div>
 		{{ else }}

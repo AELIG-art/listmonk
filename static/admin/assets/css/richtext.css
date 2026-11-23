@@ -15,8 +15,8 @@ richtext-editor {
     padding: var(--space-2);
     background: var(--card);
     border-block-end: 1px solid var(--border);
-    border-start-start-radius: var(--radius-medium);
-    border-start-end-radius: var(--radius-medium);
+    border-start-start-radius: var(--radius-large);
+    border-start-end-radius: var(--radius-large);
 }
 
 .rte-group {
@@ -49,8 +49,9 @@ richtext-editor {
 }
 
 .rte-toolbar button.is-active {
-    background: var(--muted);
-    color: var(--primary);
+    background: var(--accent);
+    color: var(--foreground);
+    box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .rte-toolbar svg.icon {

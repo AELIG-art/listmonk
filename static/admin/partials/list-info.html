@@ -4,8 +4,8 @@
 {{- $base := printf "%s/%d" (URI "/admin/lists") $l.ID -}}
 {{- $subs := printf "%s/%d" (URI "/admin/subscribers/lists") $l.ID -}}
 <div class="vstack gap-6">
-	<div class="card float">
-		<h5 class="title">{{ .L.Tc "globals.terms.list" 1 }}</h5>
+	<div class="card">
+		<h5 class="card-title">{{ .L.Tc "globals.terms.list" 1 }}</h5>
 		<div class="row">
 			<div class="col-4">
 				<div class="hstack gap-2">
@@ -39,15 +39,15 @@
 	</div>
 	<section class="row">
 		<div class="col-3">
-			<article class="card float stat-card">
-				<h4 class="title">{{ Icon "at-sign" }} {{ .L.T "globals.terms.subscribers" }}</h4>
+			<article class="card stat-card">
+				<h4 class="card-title">{{ Icon "at-sign" }} {{ .L.T "globals.terms.subscribers" }}</h4>
 				<div class="stat-value"><a href="{{ $subs }}" class="unstyled">{{ FormatNumber $l.SubscriberCount }}</a></div>
 			</article>
 		</div>
 		{{ range list "confirmed" "unconfirmed" "unsubscribed" }}
 			<div class="col-3">
-				<article class="card float stat-card">
-					<h4 class="title">{{ $.L.T (printf "globals.terms.%s" .) }}</h4>
+				<article class="card stat-card">
+					<h4 class="card-title">{{ $.L.T (printf "globals.terms.%s" .) }}</h4>
 					<div class="stat-value"><a href="{{ $subs }}?subscription_status={{ . }}" class="unstyled">{{ FormatNumber (index $l.SubscriberCounts .) }}</a></div>
 				</article>
 			</div>
@@ -55,8 +55,8 @@
 	</section>
 	<section class="row">
 		<div class="col-6">
-			<article class="card float">
-				<h5 class="title">{{ .L.Tc "globals.terms.subscriptions" 2 }}</h5>
+			<article class="card">
+				<h5 class="card-title">{{ .L.Tc "globals.terms.subscriptions" 2 }}</h5>
 				<div class="chart-box">
 					<canvas id="chart-subscriptions" data-extra-label="{{ .L.T "globals.terms.unsubscribed" }}" role="img" aria-label="{{ .L.Tc "globals.terms.subscriptions" 2 }}"></canvas>
 					<template>{{ template "empty-state" }}</template>
@@ -65,8 +65,8 @@
 		</div>
 		{{ if $d.CanViewCampaignCharts }}
 		<div class="col-6">
-			<article class="card float">
-				<h5 class="title">{{ .L.T "dashboard.campaignViews" }}</h5>
+			<article class="card">
+				<h5 class="card-title">{{ .L.T "dashboard.campaignViews" }}</h5>
 				<div class="chart-box">
 					<canvas id="chart-list-views" role="img" aria-label="{{ .L.T "dashboard.campaignViews" }}"></canvas>
 					<template>{{ template "empty-state" }}</template>
@@ -78,8 +78,8 @@
 	<script>window._listCharts = {{ ToJSON $d.Charts }};</script>
 	{{ if $d.Can "campaigns:get" "campaigns:get_all" }}
 	<section class="campaigns" x-data="campaignsView">
-		<article class="card float has-table">
-			<h5 class="title">{{ .L.T "globals.terms.campaigns" }} ({{ $d.Page.Total }})</h5>
+		<article class="card has-table">
+			<h5 class="card-title">{{ .L.T "globals.terms.campaigns" }} ({{ $d.Page.Total }})</h5>
 			<!-- <header class="align-right">
 				<form method="get" action="{{ $base }}" class="search-form">
 					{{ $d.Page.FormFields "query" "page" }}

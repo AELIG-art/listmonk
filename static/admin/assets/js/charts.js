@@ -18,8 +18,8 @@ export function chartDate(iso, interval = 'day') {
   return niceDate(interval === 'hour' ? iso : `${iso.slice(0, 10)}T00:00:00`) || iso;
 }
 
-// Render the timestamp as a separate heading above labels.
-export function lineTooltip(timestamp = (item) => item.label, interval = 'day') {
+// Shared canvas equivalents of the admin surface and typography tokens.
+export function chartTooltipStyle() {
   return {
     backgroundColor: chartThemeColor('card'),
     borderColor: chartThemeColor('border'),
@@ -32,6 +32,13 @@ export function lineTooltip(timestamp = (item) => item.label, interval = 'day') 
     bodyColor: chartThemeColor('muted-foreground'),
     bodyFont: { family: FONT_FAMILY, size: 13 },
     bodySpacing: 8,
+  };
+}
+
+// Render the timestamp as a separate heading above labels.
+export function lineTooltip(timestamp = (item) => item.label, interval = 'day') {
+  return {
+    ...chartTooltipStyle(),
     boxWidth: 10,
     boxHeight: 4,
     boxPadding: 6,

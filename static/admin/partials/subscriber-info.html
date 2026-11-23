@@ -1,8 +1,8 @@
 {{ define "subscriber-info" -}}
 {{- $d := .Data -}}
 <div class="vstack gap-6 activity">
-	<div class="card float">
-		<h5 class="title">{{ .L.Tc "globals.terms.subscriber" 1 }}</h5>
+	<div class="card">
+		<h5 class="card-title">{{ .L.Tc "globals.terms.subscriber" 1 }}</h5>
 		<div class="row">
 			<div class="col-4">
 				<strong>{{ $d.Subscriber.Name }}</strong>
@@ -29,15 +29,15 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-4"><div class="card float stat-card"><h5 class="title">{{ .L.T "globals.terms.campaigns" }}</h5><div class="stat-value">{{ len $d.CampaignViews }}</div></div></div>
-		<div class="col-4"><div class="card float stat-card"><h5 class="title">{{ .L.T "globals.terms.views" }}</h5><div class="stat-value">{{ $d.TotalViews }}</div></div></div>
-		<div class="col-4"><div class="card float stat-card"><h5 class="title">{{ .L.T "globals.terms.clicks" }}</h5><div class="stat-value">{{ $d.TotalClicks }}</div></div></div>
+		<div class="col-4"><div class="card stat-card"><h5 class="card-title">{{ .L.T "globals.terms.campaigns" }}</h5><div class="stat-value">{{ len $d.CampaignViews }}</div></div></div>
+		<div class="col-4"><div class="card stat-card"><h5 class="card-title">{{ .L.T "globals.terms.views" }}</h5><div class="stat-value">{{ $d.TotalViews }}</div></div></div>
+		<div class="col-4"><div class="card stat-card"><h5 class="card-title">{{ .L.T "globals.terms.clicks" }}</h5><div class="stat-value">{{ $d.TotalClicks }}</div></div></div>
 	</div>
 
 	<section class="row">
 		<div class="col-6">
-			<article class="card float">
-				<h5 class="title">{{ .L.T "globals.terms.views" }}</h5>
+			<article class="card">
+				<h5 class="card-title">{{ .L.T "globals.terms.views" }}</h5>
 				<div class="chart-box">
 					<canvas id="chart-subscriber-views" role="img" aria-label="{{ .L.T "globals.terms.views" }}"></canvas>
 					<template>{{ template "empty-state" }}</template>
@@ -45,8 +45,8 @@
 			</article>
 		</div>
 		<div class="col-6">
-			<article class="card float">
-				<h5 class="title">{{ .L.T "globals.terms.clicks" }}</h5>
+			<article class="card">
+				<h5 class="card-title">{{ .L.T "globals.terms.clicks" }}</h5>
 				<div class="chart-box">
 					<canvas id="chart-subscriber-clicks" role="img" aria-label="{{ .L.T "globals.terms.clicks" }}"></canvas>
 					<template>{{ template "empty-state" }}</template>
@@ -57,8 +57,8 @@
 	<script>window._subscriberCharts = {{ ToJSON $d.Charts }};</script>
 
 	{{- if $d.CampaignViews }}
-	<div class="card float has-table">
-		<h5 class="title">{{ .L.T "globals.terms.views" }}</h5>
+	<div class="card has-table">
+		<h5 class="card-title">{{ .L.T "globals.terms.views" }}</h5>
 		<div class="table-wrapper">
 			{{- if $d.Can "subscribers:manage" }}
 				<ot-dropdown class="bulk-actions">
@@ -97,8 +97,8 @@
 	{{- end }}
 
 	{{- if $d.LinkClicks }}
-	<div class="card float has-table">
-		<h5 class="title">{{ .L.T "globals.terms.clicks" }}</h5>
+	<div class="card has-table">
+		<h5 class="card-title">{{ .L.T "globals.terms.clicks" }}</h5>
 		<div class="table-wrapper">
 			{{- if $d.Can "subscribers:manage" }}
 				<ot-dropdown class="bulk-actions">

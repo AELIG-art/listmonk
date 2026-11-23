@@ -63,8 +63,8 @@
 				<a class="gap-1" href="?{{ $d.Page.Encode "tag" "page" }}&tag={{ .Tag }}"{{ if eq ($d.Page.Param "tag") .Tag }} aria-current="page"{{ end }}># {{ .Tag }} <span class="text-lighter">({{ .Count }})</span></a>
 			{{- end }}
 		</nav>
-		<div class="card float sidebar-content">
-			<h4 class="title">{{ if $d.Page.Param "tag" }}# {{ $d.Page.Param "tag" }}{{ else }}{{ $root.L.T "globals.terms.all" }}{{ end }}</h4>
+		<div class="card sidebar-content">
+			<h4 class="card-title">{{ if $d.Page.Param "tag" }}# {{ $d.Page.Param "tag" }}{{ else }}{{ $root.L.T "globals.terms.all" }}{{ end }}</h4>
 			{{- if $d.Media }}
 				<ul class="unstyled gallery">
 					{{- range $d.Media }}

@@ -24,7 +24,7 @@
 		{{- else }}
 			<div class="row">
 				<div class="col-4">
-					<fieldset class="group mt-0">
+					<fieldset class="card mt-0">
 						<legend>{{ .L.T "globals.terms.lists" }}</legend>
 						<p class="text-light">{{ .L.T "forms.selectHelp" }}</p>
 
@@ -37,7 +37,7 @@
 						</ul>
 					</fieldset>
 
-					<fieldset class="group">
+					<fieldset class="card">
 						<legend>{{ .L.T "globals.fields.redirectURL" }}</legend>
 						<p class="text-light">{{ .L.T "forms.redirectURLHelp" }}</p>
 						{{- if $.ConfigJS.PublicSubscription.RedirectURLs }}
@@ -56,8 +56,8 @@
 				</div>
 
 				<div class="col-8">
-					<article class="card float" data-testid="form" aria-label="{{ .L.T "forms.formHTML" }}">
-						<h5 class="title">{{ .L.T "forms.formHTML" }}</h5>
+					<article class="card" data-testid="form" aria-label="{{ .L.T "forms.formHTML" }}">
+						<h5 class="card-title">{{ .L.T "forms.formHTML" }}</h5>
 						<p class="text-light">{{ .L.T "forms.formHTMLHelp" }}</p>
 
 						<div x-show="checked.length > 0" x-cloak>

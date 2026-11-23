@@ -18,8 +18,8 @@
 		<form method="get" action="{{ URI (printf "/admin/%s/analytics" $d.Resource) }}" x-data="analyticsForm({{ ToJSON $d.FromInput }}, {{ ToJSON $d.ToInput }})" @submit="submitting = true">
 			{{ if eq $d.Tab "activity" }}<input type="hidden" name="tab" value="activity" />{{ end }}
 			{{ if $d.Subscriber }}<input type="hidden" name="subscriber_id" value="{{ $d.Subscriber.ID }}" />{{ end }}
-			<div class="card float">
-				<h4 class="title">{{ .L.T "globals.terms.analytics" }}</h4>
+			<div class="card">
+				<h4 class="card-title">{{ .L.T "globals.terms.analytics" }}</h4>
 				<div class="row">
 					<div class="col-5">
 						<div data-field>
@@ -96,8 +96,8 @@
 				{{- end }}
 				{{ template "analytics-chart" dict "Title" (.L.T "globals.terms.bounces") "Count" $d.Counts.Bounces "Key" "bounces" "Items" $d.Items "Resource" $d.Resource }}
 
-				<article class="card float">
-					<h4 class="title">{{ .L.T "globals.terms.links" }}</h4>
+				<article class="card">
+					<h4 class="card-title">{{ .L.T "globals.terms.links" }}</h4>
 					{{- if $d.Data.Links }}
 						<div class="chart-box"><canvas id="chart-links"></canvas></div>
 					{{- else }}
@@ -116,8 +116,8 @@
 
 {{ define "analytics-chart" -}}
 {{- $key := .Key -}}
-<article class="card float">
-	<h4 class="title">{{ .Title }}{{ if gt .Count 0 }} <span class="text-lighter">({{ FormatNumber .Count }})</span>{{ end }}</h4>
+<article class="card">
+	<h4 class="card-title">{{ .Title }}{{ if gt .Count 0 }} <span class="text-lighter">({{ FormatNumber .Count }})</span>{{ end }}</h4>
 	{{- if or (gt .Count 0) (gt (.ExtraCount | default 0) 0) }}
 		<div class="row">
 			<div class="col-9"><div class="chart-box"><canvas id="chart-{{ $key }}"{{ if .ExtraLabel }} data-extra-label="{{ .ExtraLabel }}"{{ end }}></canvas></div></div>

@@ -2,7 +2,7 @@ import Alpine from 'alpinejs';
 import Chart from 'chart.js/auto';
 
 import { api } from '../main.js';
-import { chartDate, chartThemeColor, lineTooltip } from '../charts.js';
+import { chartDate, chartThemeColor, chartTooltipStyle, lineTooltip } from '../charts.js';
 import { tagAutocomplete, tagNode } from '../tag-selector.js';
 
 const chartColorRed = '#ee7d5b';
@@ -26,14 +26,7 @@ const DEFAULT_DONUT = {
     plugins: {
       legend: { display: false },
       tooltip: {
-        backgroundColor: '#fff',
-        borderColor: '#ddd',
-        borderWidth: 1,
-        titleColor: '#666',
-        bodyColor: '#666',
-        bodyFont: { size: 15 },
-        bodySpacing: 10,
-        padding: 10,
+        ...chartTooltipStyle(),
         callbacks: {
           label: (item) => {
             const data = item.chart.data.datasets[item.datasetIndex];
@@ -79,16 +72,7 @@ const DEFAULT_BAR = {
     maintainAspectRatio: false,
     plugins: {
       legend: { display: false },
-      tooltip: {
-        backgroundColor: '#fff',
-        borderColor: '#ddd',
-        borderWidth: 1,
-        titleColor: '#666',
-        bodyColor: '#666',
-        bodyFont: { size: 15 },
-        bodySpacing: 10,
-        padding: 10,
-      },
+      tooltip: chartTooltipStyle(),
     },
     scales: {
       x: { grid: { display: false } },

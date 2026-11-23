@@ -15,8 +15,8 @@
   src: url('./fonts/Geist-Italic-Variable.woff2') format('woff2');
 }
 
-/* Theme */
-* {
+/* Shared admin tokens. Oat components inherit these in both themes. */
+:root {
     --body: light-dark(#f3f5f9, #10141c);
     --card: light-dark(#fff, #191f2a);
     --faint: light-dark(#fafafa, #191b1f);
@@ -42,6 +42,12 @@
     --shadow-small: 0 1px 2px 0 var(--shadow-tint-1);
     --shadow-medium: 0 1px 3px 0 var(--shadow-tint-2), 0 1px 2px -1px var(--shadow-tint-2);
     --shadow-large: 0 4px 6px -1px var(--shadow-tint-3), 0 2px 4px -2px var(--shadow-tint-3);
+
+    --radius-small: .375rem;
+    --radius-medium: .5rem;
+    --radius-large: .875rem;
+    --card-padding: var(--space-6);
+    --surface-overlay-shadow: 0 4px 16px -4px var(--shadow-tint-2), var(--shadow-small);
 
     --container-max: 1300px;
     --font-sans: "Geist", system-ui, sans-serif;
@@ -136,12 +142,14 @@ table {
         }
     }
 
-    tbody tr:hover {
-        background-color: transparent;
-        td {
-            border-bottom: 1px solid light-dark(#ccc, #3c4048);
-        }
+    thead th {
+        background: var(--faint);
+        color: var(--muted-foreground);
+        font-size: var(--text-8);
+        font-weight: var(--font-semibold);
     }
+
+    tbody tr:hover { background: var(--faint); }
 
     tbody tr:last-of-type,
     tbody tr:last-of-type td {
@@ -204,34 +212,69 @@ ot-tabs:not(:defined) {
 
 [role="tablist"][data-variant="primary"] {
     margin-bottom: var(--space-6);
-    background-color: light-dark(#ededee, var(--muted));
+    background-color: var(--muted);
 }
 
-/* Fieldset-style cards. */
+/* Panels, form sections and table cards share the same surface and heading. */
 @layer components {
-    .card.float {
-        margin-block-start: 0.75em;
+    .card {
+        min-inline-size: 0;
+        padding: var(--card-padding);
+        border-radius: var(--radius-large);
+        box-shadow: var(--shadow-small);
     }
 }
 
-.card.float {
-    padding: var(--space-4);
-    box-shadow: none;
+.card > :is(.card-title, legend), .card > header > :is(h1, h2, h3, h4, h5) {
+    margin: 0 0 var(--space-4);
+    padding: 0;
+    font-size: var(--text-6);
+    font-weight: var(--font-semibold);
+    line-height: 1.4;
+    letter-spacing: -.02em;
+}
 
-    > .title {
-        width: fit-content;
-        max-width: 100%;
-        margin: -26px 0 var(--space-4) 0;
-        padding: 0 var(--space-2);
-        font-size: var(--text-7);
+/* Keep native field grouping while placing the legend inside the panel. */
+fieldset.card > legend {
+    float: inline-start;
+    width: 100%;
+}
+fieldset.card > legend + * { clear: both; }
+
+@layer components {
+    :is(button, a.button, input[type="submit"], input[type="reset"], input[type="button"]) {
+        border-color: transparent;
         font-weight: var(--font-medium);
-        line-height: var(--leading-normal);
+        &:active:not(:disabled) { transform: none; }
+        &.outline { border-color: var(--input); box-shadow: var(--shadow-small); }
+        &[data-variant="secondary"] { border-color: transparent; }
     }
 
-    &.has-table {
-        .title {
-            margin-bottom: 0;
-        }
+    :where(input:not([type="checkbox"], [type="radio"], [type="range"], [type="color"], [type="file"],
+        [type="submit"], [type="reset"], [type="button"], [type="hidden"]), select, textarea, ot-taginput):not(:disabled, :focus, :focus-within, :user-invalid, [aria-invalid="true"]) {
+        background-color: var(--card);
+        border-color: var(--input);
+        box-shadow: var(--shadow-small);
+    }
+    ot-taginput input:enabled { background: transparent; box-shadow: none; border: 0; }
+    :is(input, select, textarea, ot-taginput)[aria-invalid="true"] { border-color: var(--danger); }
+
+    ot-dropdown [popover]:not(.ot-tooltip), .toast {
+        border-radius: var(--radius-medium);
+        box-shadow: var(--surface-overlay-shadow);
+    }
+    ot-dropdown menu[popover] { padding: var(--space-1); }
+    ot-dropdown [role="menuitem"] { border-radius: var(--radius-small); }
+    .ot-tooltip::after { padding: .375rem .625rem; font-size: var(--text-8); }
+    [role="alert"], [role="alert"][data-variant] {
+        border: 1px solid var(--border);
+        border-radius: var(--radius-large);
+        padding: var(--space-3) var(--space-4);
+    }
+    ot-upload.card {
+        border-style: dashed;
+        background: var(--faint);
+        box-shadow: none;
     }
 }
 
@@ -242,7 +285,10 @@ ot-tabs:not(:defined) {
     border-radius: var(--radius-medium);
     box-shadow: var(--shadow-medium);
 
+    padding: var(--space-1);
+
     .autocomp-item {
+        border-radius: var(--radius-small);
         padding: var(--space-2) var(--space-3);
         cursor: pointer;
 
@@ -254,10 +300,6 @@ ot-tabs:not(:defined) {
 }
 
 fieldset {
-    &.card {
-        padding-block-start: var(--space-4);
-    }
-
     > [data-field]:last-child {
         margin-block-end: 0;
     }
@@ -266,16 +308,20 @@ fieldset {
 dialog {
     padding: 0;
     overflow: auto;
-    border-radius: var(--radius-medium);
+    border: 1px solid var(--border);
+    background: var(--card);
+    border-radius: var(--radius-large);
+    box-shadow: var(--surface-overlay-shadow);
+
+    &::backdrop { background: rgb(10 15 26 / .5); }
 
     .dialog-card {
         padding: 0;
     }
 
     .dialog-head {
-        background: var(--muted);
-        border-bottom: 1px solid var(--border);
-        padding: var(--space-3) var(--space-4);
+        background: var(--card);
+        padding: var(--space-5) var(--space-5) 0;
 
         .dialog-title {
             margin: 0;
@@ -284,10 +330,12 @@ dialog {
     }
 
     .dialog-body {
-        padding: var(--space-4);
+        padding: var(--space-5);
     }
 
     .dialog-foot {
+        border-block-start: 1px solid var(--border);
+        background: var(--faint);
         display: flex;
         gap: var(--space-2);
         justify-content: flex-end;
@@ -310,7 +358,9 @@ a:has(> .badge:only-child) {
     --badge-fg: var(--tone-neutral);
     --badge-bg: var(--tone-neutral-bg);
 
-    padding: calc(var(--space-1) * 0.75) var(--space-4);
+    padding: .125rem .5rem;
+    font-weight: var(--font-medium);
+    border-radius: var(--radius-small);
     background-color: var(--badge-bg);
     color: var(--badge-fg);
     border: 0;
@@ -485,11 +535,22 @@ td.stats {
     padding: var(--space-3) var(--space-6) var(--space-3) 0;
 
     a {
-        padding: var(--space-1) var(--space-3);
-        border-radius: var(--radius-small);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: 2rem;
+        min-block-size: 2rem;
+        padding-inline: var(--space-2);
+        border: 1px solid transparent;
+        border-radius: var(--radius-medium);
+        color: var(--muted-foreground);
+        font-variant-numeric: tabular-nums;
 
+        &:hover { background: var(--muted); }
         &[aria-current="page"] {
-            background: var(--accent);
+            background: var(--card);
+            border-color: var(--input);
+            box-shadow: var(--shadow-small);
             color: var(--foreground);
         }
     }
@@ -628,8 +689,13 @@ aside[data-sidebar] {
         padding: var(--space-6) 0 var(--space-2);
 
         a {
-            padding: 0;
+            width: 100%;
+            min-height: 3rem;
+            padding: .5rem .625rem;
+            border-radius: var(--radius-medium);
             background: transparent;
+
+            &:is(:hover, :focus-visible) { background: var(--muted); }
         }
 
         img {
@@ -714,12 +780,6 @@ aside[data-sidebar] nav a[aria-current="page"] {
 }
 .page-title { letter-spacing: -.035em; }
 .stat-value { font-variant-numeric: tabular-nums; letter-spacing: -.04em; }
-section.dashboard .stat-card {
-    border: 1px solid var(--border);
-    box-shadow: var(--shadow-small);
-}
-table thead th { background: var(--faint); color: var(--secondary-foreground); }
-table tbody tr:hover { background: var(--faint); }
 :focus-visible { outline: 2px solid var(--ring); outline-offset: 2px; }
 
 main {
@@ -935,7 +995,7 @@ main {
         color: inherit;
     }
 
-    a:hover {
+    a:hover, [aria-current="page"] {
         color: var(--foreground);
     }
 }
@@ -1011,10 +1071,7 @@ td > .empty-state {
     padding-block-start: 0;
     padding-block-end: 0;
 
-    &:where(.float) {
-        padding-block-start: var(--space-4);
-        padding-inline: var(--space-6);
-    }
+    > .card-title { padding-block-start: var(--card-padding); }
 
     /* Stick the table to the edges */
     .table-wrapper {
@@ -1095,7 +1152,7 @@ td > .empty-state {
 
         .actions button.more {
             padding: var(--space-1);
-            border-radius: 0;
+            border-radius: var(--radius-small);
         }
     }
 }
@@ -1325,20 +1382,6 @@ section.subscribers {
 
 /* Dashboard */
 section.dashboard {
-    .dashboard-panel {
-        padding: clamp(1rem, 2vw, 1.5rem);
-        border: 1px solid var(--border);
-        box-shadow: var(--shadow-small);
-    }
-
-    .panel-heading {
-        margin: 0 0 1.25rem;
-        font-size: 1rem;
-        font-weight: 600;
-        line-height: 1.4;
-        letter-spacing: -.015em;
-    }
-
     .stat-card {
         display: flex;
         flex-direction: column;
@@ -1738,7 +1781,7 @@ section.import {
         align-items: center;
         aspect-ratio: 4 / 3;
         background: var(--faint);
-        border-radius: var(--radius-medium);
+        border-radius: var(--radius-large) var(--radius-large) 0 0;
         display: flex;
         justify-content: center;
         overflow: hidden;
@@ -1752,7 +1795,8 @@ section.import {
 
     figcaption {
         display: grid;
-        padding: var(--space-2);
+        gap: .25rem;
+        padding: var(--space-3);
     }
 
     .filename {
@@ -1965,33 +2009,6 @@ section.users {
 
 /* Forms */
 .forms {
-    fieldset.group {
-        display: block;
-        margin-block-start: 0.75em;
-        padding: var(--space-4);
-        border: 1px solid var(--border);
-        background-color: var(--card);
-        color: var(--card-foreground);
-
-        &:first-child {
-            margin-block-start: 0;
-        }
-
-        > legend {
-            float: none;
-            display: block;
-            max-width: 100%;
-            padding: 0 var(--space-2);
-            border: 0;
-            border-radius: 0;
-            background: transparent;
-            color: inherit;
-            font-size: var(--text-7);
-            font-weight: var(--font-medium);
-            line-height: var(--leading-normal);
-        }
-    }
-
     code-editor {
         font-size: var(--text-8);
         height: auto;
@@ -2298,7 +2315,7 @@ body.admin-public {
             padding-inline: var(--space-4);
             background-color: var(--card);
             border: 1px solid var(--border);
-            border-radius: var(--radius-medium);
+            border-radius: var(--radius-large);
             box-shadow: var(--shadow-small);
             transition: box-shadow var(--transition-fast);
 

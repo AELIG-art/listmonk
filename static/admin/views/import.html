@@ -105,8 +105,8 @@
 		<!-- Running / done status. -->
 		{{ if not $show }}
 			<section class="status">
-				<article class="card float">
-					<h5 class="title capitalize" :class="{ 'text-danger': status.status === 'failed' || status.status === 'stopped' }" x-text="status.status">{{ $d.Status.Status }}</h5>
+				<article class="card">
+					<h5 class="card-title capitalize" :class="{ 'text-danger': status.status === 'failed' || status.status === 'stopped' }" x-text="status.status">{{ $d.Status.Status }}</h5>
 					<div class="row">
 						<header class="col-8">
 							<small class="text-light hstack">
@@ -126,8 +126,8 @@
 					</footer>
 				</article>
 
-				<article class="card float import-logs log-view mt-6">
-					<h5 class="title">{{ .L.T "globals.terms.logs" }}</h5>
+				<article class="card import-logs log-view mt-6">
+					<h5 class="card-title">{{ .L.T "globals.terms.logs" }}</h5>
 					<div class="lines" x-ref="logLines">
 						<template x-for="(l, i) in logLines" :key="i">
 							<span class="line">

@@ -10,8 +10,8 @@
 {{- if not $d.IndividualTracking }}
 <p class="text-light">{{ Icon "alert-triangle" }} {{ .L.T "settings.privacy.individualSubTracking" }}: {{ .L.T "globals.terms.disabled" }}</p>
 {{- end }}
-<article class="card float has-table">
-	<h4 class="title">{{ .L.T "globals.terms.activity" }}</h4>
+<article class="card has-table">
+	<h4 class="card-title">{{ .L.T "globals.terms.activity" }}</h4>
 	{{- if $d.Subscriber }}
 		{{- if $d.ActivityEvents }}
 		<div class="table-wrapper">

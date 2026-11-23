@@ -57,8 +57,8 @@
 
 		<section class="row">
 			<div class="col-6">
-				<article class="card dashboard-panel">
-					<h2 class="panel-heading"><a href="{{ URI "/admin/campaigns/analytics" }}" class="unstyled">{{ .L.T "dashboard.campaignViews" }}</a></h2>
+				<article class="card">
+					<h2 class="card-title"><a href="{{ URI "/admin/campaigns/analytics" }}" class="unstyled">{{ .L.T "dashboard.campaignViews" }}</a></h2>
 					<div class="chart-box">
 						<canvas id="chart-views"></canvas>
 						<template>{{ template "empty-state" }}</template>
@@ -67,8 +67,8 @@
 			</div>
 
 			<div class="col-6">
-				<article class="card dashboard-panel">
-					<h2 class="panel-heading"><a href="{{ URI "/admin/campaigns/analytics" }}" class="unstyled">{{ .L.T "dashboard.linkClicks" }}</a></h2>
+				<article class="card">
+					<h2 class="card-title"><a href="{{ URI "/admin/campaigns/analytics" }}" class="unstyled">{{ .L.T "dashboard.linkClicks" }}</a></h2>
 					<div class="chart-box">
 						<canvas id="chart-clicks"></canvas>
 						<template>{{ template "empty-state" }}</template>
@@ -79,8 +79,8 @@
 
 		<section class="row">
 			<div class="col-8">
-				<article class="card dashboard-panel">
-					<h2 class="panel-heading">{{ .L.Ts "globals.terms.recent" "name" ((.L.T "globals.terms.campaigns") | lower) }}</h2>
+				<article class="card">
+					<h2 class="card-title">{{ .L.Ts "globals.terms.recent" "name" ((.L.T "globals.terms.campaigns") | lower) }}</h2>
 					<div class="table-wrapper">
 						<table>
 							<tbody>
@@ -119,8 +119,8 @@
 
 			<div class="col-4">
 				{{- $s := $d.System -}}
-				<article class="card dashboard-panel">
-					<h2 class="panel-heading">{{ Icon "activity" }} {{ .L.T "globals.terms.system" }}</h2>
+				<article class="card">
+					<h2 class="card-title">{{ Icon "activity" }} {{ .L.T "globals.terms.system" }}</h2>
 					<dl class="vstack gap-4">
 						<div class="hstack justify-between"><dt>{{ .L.T "dashboard.uptime" }}</dt><dd class="text-light">{{ $s.Uptime }}</dd></div>
 						<div class="hstack justify-between"><dt>{{ .L.T "dashboard.appMemory" }}</dt><dd class="text-light">{{ FormatNumber (int $s.AppMemMB) }} MB</dd></div>
