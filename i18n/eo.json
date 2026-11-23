@@ -1,4 +1,12 @@
 {
+    "quota.title": "Monata retpoŝta kvoto",
+    "quota.limit": "Maksimuma nombro de retmesaĝoj monate",
+    "quota.enable": "Limigi la monatan sendadon de retmesaĝoj",
+    "quota.help": "Agordu la valoron je 0 por paŭzigi la sendadon.",
+    "quota.lock": "La mediovariablo MAX_QUOTA regas ĉi tiun limon.",
+    "quota.usage": "Retmesaĝoj kalkulitaj ĉi-monate",
+    "quota.reset": "La nombrilo rekomenciĝos je la unua tago de la venonta monato,",
+    "quota.blocked": "Ĉi tiu kampanjo superas la restantan monatan retpoŝtan kvoton.",
     "_.code": "eo",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

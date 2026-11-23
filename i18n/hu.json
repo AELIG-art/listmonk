@@ -1,4 +1,12 @@
 {
+    "quota.title": "Havi e-mail-kvóta",
+    "quota.limit": "E-mailek maximális száma havonta",
+    "quota.enable": "A havi e-mail-küldés korlátozása",
+    "quota.help": "A küldés szüneteltetéséhez állítsa az értéket 0-ra.",
+    "quota.lock": "A korlátot a MAX_QUOTA környezeti változó határozza meg.",
+    "quota.usage": "Ebben a hónapban elszámolt e-mailek",
+    "quota.reset": "A számláló a következő hónap első napján indul újra. Ennek dátuma:",
+    "quota.blocked": "Ez a kampány túllépi a fennmaradó havi e-mail-kvótát.",
     "_.code": "hu",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

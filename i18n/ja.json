@@ -1,4 +1,12 @@
 {
+    "quota.title": "月間メール送信枠",
+    "quota.limit": "月間メール送信数の上限",
+    "quota.enable": "月間メール送信数を制限する",
+    "quota.help": "メール送信を一時停止するには 0 を指定してください。",
+    "quota.lock": "この上限は環境変数 MAX_QUOTA で設定されています。",
+    "quota.usage": "今月のメール使用数",
+    "quota.reset": "使用数は翌月1日にリセットされます。次回リセット日：",
+    "quota.blocked": "このキャンペーンの送信数は今月の残りの送信枠を超えています。",
     "_.code": "ja",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

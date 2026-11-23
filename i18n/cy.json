@@ -1,4 +1,12 @@
 {
+    "quota.title": "Cwota e-bost misol",
+    "quota.limit": "Uchafswm y negeseuon e-bost y mis",
+    "quota.enable": "Cyfyngu ar nifer y negeseuon e-bost a anfonir bob mis",
+    "quota.help": "Gosodwch y gwerth i 0 i oedi anfon negeseuon e-bost.",
+    "quota.lock": "Mae newidyn amgylchedd MAX_QUOTA yn rheoli’r terfyn hwn.",
+    "quota.usage": "Negeseuon e-bost a gyfrifwyd y mis hwn",
+    "quota.reset": "Bydd y cyfrif yn ailddechrau ar ddiwrnod cyntaf y mis nesaf,",
+    "quota.blocked": "Mae’r ymgyrch hon yn fwy na’r cwota e-bost misol sy’n weddill.",
     "_.code": "cy",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

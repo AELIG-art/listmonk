@@ -1,4 +1,12 @@
 {
+    "quota.title": "Månedlig e-postkvote",
+    "quota.limit": "Maksimalt antall e-poster per måned",
+    "quota.enable": "Begrens månedlig utsending av e-post",
+    "quota.help": "Sett verdien til 0 for å sette utsendingen på pause.",
+    "quota.lock": "Grensen styres av miljøvariabelen MAX_QUOTA.",
+    "quota.usage": "E-poster som er telt med denne måneden",
+    "quota.reset": "Telleren nullstilles den første dagen i neste måned,",
+    "quota.blocked": "Denne kampanjen overskrider den gjenværende e-postkvoten for måneden.",
     "_.code": "no",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

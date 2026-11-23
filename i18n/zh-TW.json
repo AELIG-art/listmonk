@@ -1,4 +1,12 @@
 {
+    "quota.title": "每月郵件配額",
+    "quota.limit": "每月郵件數量上限",
+    "quota.enable": "限制每月郵件寄送量",
+    "quota.help": "設為 0 即可暫停寄送郵件。",
+    "quota.lock": "此上限由環境變數 MAX_QUOTA 控制。",
+    "quota.usage": "本月已用郵件數",
+    "quota.reset": "用量將於下月 1 日歸零，重設日期為",
+    "quota.blocked": "此活動的郵件數量超過本月剩餘配額。",
     "_.code": "zh-TW",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

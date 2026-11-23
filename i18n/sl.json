@@ -1,4 +1,12 @@
 {
+    "quota.title": "Mesečna kvota e-pošte",
+    "quota.limit": "Največje število e-poštnih sporočil na mesec",
+    "quota.enable": "Omeji mesečno pošiljanje e-pošte",
+    "quota.help": "Za začasno ustavitev pošiljanja nastavite vrednost na 0.",
+    "quota.lock": "Omejitev določa okoljska spremenljivka MAX_QUOTA.",
+    "quota.usage": "Všteta e-poštna sporočila v tem mesecu",
+    "quota.reset": "Števec se ponastavi prvi dan naslednjega meseca,",
+    "quota.blocked": "Ta kampanja presega preostalo mesečno kvoto e-pošte.",
     "_.code": "sl",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

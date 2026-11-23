@@ -1,4 +1,12 @@
 {
+    "quota.title": "Quota mensal de mensagens de correio eletrónico",
+    "quota.limit": "Número máximo de mensagens por mês",
+    "quota.enable": "Limitar o envio mensal de mensagens",
+    "quota.help": "Defina o valor como 0 para suspender o envio.",
+    "quota.lock": "A variável de ambiente MAX_QUOTA determina este limite.",
+    "quota.usage": "Mensagens contabilizadas este mês",
+    "quota.reset": "O contador volta a zero no primeiro dia do próximo mês, a",
+    "quota.blocked": "Esta campanha excede a quota mensal de mensagens ainda disponível.",
     "_.code": "pt",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

@@ -1,4 +1,12 @@
 {
+    "quota.title": "Hạn mức email hằng tháng",
+    "quota.limit": "Số email tối đa mỗi tháng",
+    "quota.enable": "Giới hạn số email gửi mỗi tháng",
+    "quota.help": "Đặt thành 0 để tạm dừng gửi email.",
+    "quota.lock": "Biến môi trường MAX_QUOTA quy định hạn mức này.",
+    "quota.usage": "Số email đã tính trong tháng này",
+    "quota.reset": "Bộ đếm sẽ về 0 vào ngày đầu tiên của tháng tới, tức ngày",
+    "quota.blocked": "Chiến dịch này vượt quá hạn mức email còn lại trong tháng.",
     "_.code": "vi",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

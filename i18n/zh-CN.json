@@ -1,4 +1,12 @@
 {
+    "quota.title": "每月邮件配额",
+    "quota.limit": "每月邮件数量上限",
+    "quota.enable": "限制每月邮件发送量",
+    "quota.help": "设为 0 可暂停发送邮件。",
+    "quota.lock": "此上限由环境变量 MAX_QUOTA 控制。",
+    "quota.usage": "本月已用邮件数",
+    "quota.reset": "用量将于下月 1 日重置，重置日期为",
+    "quota.blocked": "此活动的邮件数量超过了本月剩余配额。",
     "_.code": "zh-CN",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

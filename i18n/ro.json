@@ -1,4 +1,12 @@
 {
+    "quota.title": "Cotă lunară de e-mailuri",
+    "quota.limit": "Număr maxim de e-mailuri pe lună",
+    "quota.enable": "Limitează trimiterea lunară de e-mailuri",
+    "quota.help": "Setați valoarea la 0 pentru a suspenda trimiterea.",
+    "quota.lock": "Limita este stabilită de variabila de mediu MAX_QUOTA.",
+    "quota.usage": "E-mailuri contorizate luna aceasta",
+    "quota.reset": "Contorul se resetează în prima zi a lunii următoare, pe",
+    "quota.blocked": "Această campanie depășește cota lunară de e-mailuri rămasă.",
     "_.code": "ro",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

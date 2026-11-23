@@ -1,4 +1,12 @@
 {
+    "quota.title": "Mjesečna kvota e-poruka",
+    "quota.limit": "Najveći broj e-poruka mjesečno",
+    "quota.enable": "Ograniči mjesečni broj e-poruka",
+    "quota.help": "Postavite vrijednost na 0 za privremeni prekid slanja.",
+    "quota.lock": "Ograničenje određuje varijabla okruženja MAX_QUOTA.",
+    "quota.usage": "Broj obračunatih e-poruka ovog mjeseca",
+    "quota.reset": "Brojač se vraća na nulu prvog dana sljedećeg mjeseca,",
+    "quota.blocked": "Ova kampanja premašuje preostalu mjesečnu kvotu e-poruka.",
     "_.code": "hr",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

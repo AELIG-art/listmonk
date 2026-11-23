@@ -1,4 +1,12 @@
 {
+    "quota.title": "Månedlig mailkvote",
+    "quota.limit": "Maksimalt antal mails pr. måned",
+    "quota.enable": "Begræns antallet af mails pr. måned",
+    "quota.help": "Sæt værdien til 0 for at sætte afsendelsen på pause.",
+    "quota.lock": "Grænsen styres af miljøvariablen MAX_QUOTA.",
+    "quota.usage": "Mails medregnet denne måned",
+    "quota.reset": "Tælleren nulstilles den første dag i næste måned,",
+    "quota.blocked": "Denne kampagne overskrider den resterende mailkvote for måneden.",
     "_.code": "da",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

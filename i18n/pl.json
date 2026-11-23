@@ -1,4 +1,12 @@
 {
+    "quota.title": "Miesięczny limit e-maili",
+    "quota.limit": "Maksymalna liczba e-maili na miesiąc",
+    "quota.enable": "Ogranicz miesięczną liczbę wysyłanych e-maili",
+    "quota.help": "Ustaw 0, aby wstrzymać wysyłkę.",
+    "quota.lock": "Limit określa zmienna środowiskowa MAX_QUOTA.",
+    "quota.usage": "E-maile wliczone do limitu w tym miesiącu",
+    "quota.reset": "Licznik zostanie wyzerowany pierwszego dnia następnego miesiąca, czyli",
+    "quota.blocked": "Ta kampania przekracza pozostały miesięczny limit e-maili.",
     "_.code": "pl",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

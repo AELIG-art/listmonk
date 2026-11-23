@@ -1,4 +1,12 @@
 {
+    "quota.title": "Kuukausittainen sähköpostikiintiö",
+    "quota.limit": "Sähköpostien enimmäismäärä kuukaudessa",
+    "quota.enable": "Rajoita kuukausittaista sähköpostien lähetystä",
+    "quota.help": "Keskeytä sähköpostien lähetys asettamalla arvoksi 0.",
+    "quota.lock": "Rajan määrittää ympäristömuuttuja MAX_QUOTA.",
+    "quota.usage": "Tässä kuussa kiintiöön lasketut viestit",
+    "quota.reset": "Laskuri nollautuu seuraavan kuukauden ensimmäisenä päivänä,",
+    "quota.blocked": "Kampanja ylittää jäljellä olevan kuukausittaisen sähköpostikiintiön.",
     "_.code": "fi",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

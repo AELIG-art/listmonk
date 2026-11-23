@@ -1,4 +1,12 @@
 {
+    "quota.title": "Maandelijks e-mailquotum",
+    "quota.limit": "Maximumaantal e-mails per maand",
+    "quota.enable": "Maandelijkse e-mailverzending beperken",
+    "quota.help": "Stel de waarde in op 0 om de verzending te pauzeren.",
+    "quota.lock": "De omgevingsvariabele MAX_QUOTA bepaalt deze limiet.",
+    "quota.usage": "Deze maand meegetelde e-mails",
+    "quota.reset": "De teller wordt op de eerste dag van de volgende maand teruggezet naar nul, op",
+    "quota.blocked": "Deze campagne overschrijdt het resterende e-mailquotum voor deze maand.",
     "_.code": "nl",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

@@ -1,7 +1,8 @@
 {
     "quota.title": "Monthly email quota",
     "quota.limit": "Maximum emails per month",
-    "quota.help": "Set −1 for unlimited sending, or 0 to pause all email delivery.",
+    "quota.enable": "Limit monthly email sending",
+    "quota.help": "Set to 0 to pause email delivery.",
     "quota.lock": "Managed by the MAX_QUOTA environment variable.",
     "quota.usage": "Emails used this month",
     "quota.reset": "Usage resets on the first of next month,",

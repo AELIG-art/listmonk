@@ -1,4 +1,12 @@
 {
+    "quota.title": "Cota mensal de e-mails",
+    "quota.limit": "Número máximo de e-mails por mês",
+    "quota.enable": "Limitar o envio mensal de e-mails",
+    "quota.help": "Defina o valor como 0 para pausar o envio.",
+    "quota.lock": "A variável de ambiente MAX_QUOTA define este limite.",
+    "quota.usage": "E-mails contabilizados neste mês",
+    "quota.reset": "A contagem recomeça no primeiro dia do próximo mês, em",
+    "quota.blocked": "Esta campanha excede a cota de e-mails restante neste mês.",
     "_.code": "pt-BR",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

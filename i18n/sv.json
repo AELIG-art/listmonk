@@ -1,4 +1,12 @@
 {
+    "quota.title": "Månatlig e-postkvot",
+    "quota.limit": "Högsta antal mejl per månad",
+    "quota.enable": "Begränsa antalet mejl per månad",
+    "quota.help": "Ange 0 för att pausa utskicken.",
+    "quota.lock": "Gränsen styrs av miljövariabeln MAX_QUOTA.",
+    "quota.usage": "Mejl som räknats in den här månaden",
+    "quota.reset": "Räknaren nollställs den första dagen i nästa månad,",
+    "quota.blocked": "Kampanjen överskrider den återstående e-postkvoten för månaden.",
     "_.code": "sv",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

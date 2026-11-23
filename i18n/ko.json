@@ -1,4 +1,12 @@
 {
+    "quota.title": "월간 이메일 한도",
+    "quota.limit": "월간 최대 이메일 수",
+    "quota.enable": "월간 이메일 발송량 제한",
+    "quota.help": "이메일 발송을 일시 중지하려면 0으로 설정하세요.",
+    "quota.lock": "MAX_QUOTA 환경 변수가 이 한도를 설정합니다.",
+    "quota.usage": "이번 달 이메일 사용량",
+    "quota.reset": "사용량은 다음 달 1일에 초기화됩니다. 다음 초기화 날짜:",
+    "quota.blocked": "이 캠페인의 발송량이 이번 달 남은 이메일 한도를 초과합니다.",
     "_.code": "ko",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

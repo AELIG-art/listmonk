@@ -98,6 +98,17 @@ function component(settings, userRoles, listRoles) {
     userRoles,
     listRoles,
 
+    lastQuota: '',
+    get quotaEnabled() {
+      return this.form['app.monthly_email_limit'] !== -1;
+    },
+    toggleQuota(enabled) {
+      if (!enabled) {
+        this.lastQuota = this.form['app.monthly_email_limit'];
+      }
+      this.form['app.monthly_email_limit'] = enabled ? this.lastQuota : -1;
+    },
+
     smtpTestItem: null,
     testEmail: '',
     errMsg: '',
@@ -449,6 +460,10 @@ function component(settings, userRoles, listRoles) {
             clearInterval(poll);
             try {
               this.form = normalize(await api('settings', '/settings'));
+              if (this.form['app.monthly_email_limit'] !== settings['app.monthly_email_limit']) {
+                window.location.reload();
+                return;
+              }
               u.toast(i18n.ts('globals.messages.updated', { name: i18n.t('globals.terms.settings') }), 'success');
             } finally {
               this.isRestarting = false;

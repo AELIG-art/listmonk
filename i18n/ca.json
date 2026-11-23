@@ -1,4 +1,12 @@
 {
+    "quota.title": "Quota mensual de correus",
+    "quota.limit": "Nombre màxim de correus al mes",
+    "quota.enable": "Limita l’enviament mensual de correus",
+    "quota.help": "Establiu el valor a 0 per aturar temporalment els enviaments.",
+    "quota.lock": "La variable d’entorn MAX_QUOTA controla aquest límit.",
+    "quota.usage": "Correus comptabilitzats aquest mes",
+    "quota.reset": "El comptador es posa a zero el primer dia del mes vinent,",
+    "quota.blocked": "Aquesta campanya supera la quota mensual de correus disponible.",
     "_.code": "ca",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

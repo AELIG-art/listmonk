@@ -1,4 +1,12 @@
 {
+    "quota.title": "Monatliches E-Mail-Kontingent",
+    "quota.limit": "Maximale Anzahl E-Mails pro Monat",
+    "quota.enable": "Monatlichen E-Mail-Versand begrenzen",
+    "quota.help": "Mit dem Wert 0 wird der Versand pausiert.",
+    "quota.lock": "Die Umgebungsvariable MAX_QUOTA legt dieses Limit fest.",
+    "quota.usage": "Diesen Monat angerechnete E-Mails",
+    "quota.reset": "Der Zähler wird am ersten Tag des nächsten Monats zurückgesetzt, am",
+    "quota.blocked": "Diese Kampagne überschreitet das verbleibende E-Mail-Kontingent für diesen Monat.",
     "_.code": "de",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

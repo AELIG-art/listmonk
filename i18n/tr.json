@@ -1,4 +1,12 @@
 {
+    "quota.title": "Aylık e-posta kotası",
+    "quota.limit": "Aylık en fazla e-posta sayısı",
+    "quota.enable": "Aylık e-posta gönderimini sınırla",
+    "quota.help": "E-posta gönderimini duraklatmak için değeri 0 olarak ayarlayın.",
+    "quota.lock": "Bu sınır MAX_QUOTA ortam değişkeniyle belirlenir.",
+    "quota.usage": "Bu ay kotaya sayılan e-postalar",
+    "quota.reset": "Sayaç gelecek ayın ilk gününde sıfırlanır. Sıfırlama tarihi:",
+    "quota.blocked": "Bu kampanya kalan aylık e-posta kotasını aşıyor.",
     "_.code": "tr",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

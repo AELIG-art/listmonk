@@ -1,4 +1,12 @@
 {
+    "quota.title": "Měsíční kvóta e-mailů",
+    "quota.limit": "Maximální počet e-mailů za měsíc",
+    "quota.enable": "Omezit měsíční počet odesílaných e-mailů",
+    "quota.help": "Nastavením na 0 pozastavíte odesílání e-mailů.",
+    "quota.lock": "Limit určuje proměnná prostředí MAX_QUOTA.",
+    "quota.usage": "Počet započítaných e-mailů za tento měsíc",
+    "quota.reset": "Počítadlo se vynuluje první den příštího měsíce,",
+    "quota.blocked": "Tato kampaň překračuje zbývající měsíční kvótu e-mailů.",
     "_.code": "cs",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

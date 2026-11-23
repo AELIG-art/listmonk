@@ -1,4 +1,12 @@
 {
+    "quota.title": "Cuota mensual de correos",
+    "quota.limit": "Número máximo de correos al mes",
+    "quota.enable": "Limitar el envío mensual de correos",
+    "quota.help": "Introduce 0 para pausar el envío de correos.",
+    "quota.lock": "La variable de entorno MAX_QUOTA controla este límite.",
+    "quota.usage": "Correos contabilizados este mes",
+    "quota.reset": "El contador se pone a cero el primer día del próximo mes, el",
+    "quota.blocked": "Esta campaña supera la cuota mensual de correos disponible.",
     "_.code": "es",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",

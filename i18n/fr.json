@@ -1,4 +1,12 @@
 {
+    "quota.title": "Quota mensuel de courriels",
+    "quota.limit": "Nombre maximal de courriels par mois",
+    "quota.enable": "Limiter les envois mensuels de courriels",
+    "quota.help": "Saisissez 0 pour suspendre les envois.",
+    "quota.lock": "La variable d’environnement MAX_QUOTA détermine cette limite.",
+    "quota.usage": "Courriels comptabilisés ce mois-ci",
+    "quota.reset": "Le compteur sera remis à zéro le premier jour du mois prochain, le",
+    "quota.blocked": "Cette campagne dépasse le quota de courriels restant pour ce mois.",
     "_.code": "fr",
     "_.date_long": "02 January 2006",
     "_.date_short": "Mon 02 Jan 2006",

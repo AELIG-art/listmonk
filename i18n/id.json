@@ -1,4 +1,12 @@
 {
+    "quota.title": "Kuota email bulanan",
+    "quota.limit": "Jumlah maksimum email per bulan",
+    "quota.enable": "Batasi pengiriman email bulanan",
+    "quota.help": "Atur ke 0 untuk menjeda pengiriman email.",
+    "quota.lock": "Batas ini ditentukan oleh variabel lingkungan MAX_QUOTA.",
+    "quota.usage": "Email yang dihitung bulan ini",
+    "quota.reset": "Penghitungan dimulai kembali pada hari pertama bulan depan, yaitu",
+    "quota.blocked": "Kampanye ini melebihi sisa kuota email bulan ini.",
     "_.code": "id",
     "_.date_long": "January 02, 2006",
     "_.date_short": "Mon, 02 Jan 2006",
