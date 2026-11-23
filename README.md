@@ -10,6 +10,27 @@ Visit [listmonk.app](https://listmonk.app) for more info. Check out the [**live 
 
 ## Installation
 
+### Railway
+
+Add a [PostgreSQL service](https://docs.railway.com/databases/postgresql) named `Postgres` and a GitHub service for this repository in the same Railway project. The repository's `railway.json` selects `Dockerfile.railway`, which builds Listmonk from source and runs it behind Caddy. Use the image's default start command.
+
+Paste these references into the Listmonk service's **Variables → Raw Editor**. If your PostgreSQL service has a different name, replace `Postgres` in each reference.
+
+```dotenv
+LISTMONK_db__host=${{Postgres.PGHOST}}
+LISTMONK_db__port=${{Postgres.PGPORT}}
+LISTMONK_db__user=${{Postgres.PGUSER}}
+LISTMONK_db__password=${{Postgres.PGPASSWORD}}
+LISTMONK_db__database=${{Postgres.PGDATABASE}}
+LISTMONK_db__ssl_mode=disable
+```
+
+Listmonk initializes an empty database and applies pending migrations on startup. Caddy listens on Railway's `PORT` and proxies to `127.0.0.1:9000`. If you set a target port manually, use `8080` or match your `PORT` variable.
+
+Generate a public domain for the Listmonk service and open it to set up the administrator. To create the administrator automatically, set `LISTMONK_ADMIN_USER` and `LISTMONK_ADMIN_PASSWORD` before the first deployment. In **Settings**, set **Root URL** to the public HTTPS URL so campaign links point to your deployment.
+
+For cross-origin requests, set `LISTMONK_ORIGIN_0` through `LISTMONK_ORIGIN_4` to the allowed origins, such as `https://www.example.com`, without trailing slashes. To persist media stored on the filesystem, mount a [Railway volume](https://docs.railway.com/volumes) at `/listmonk/uploads`.
+
 ### Docker
 
 The latest image is available on DockerHub at [`listmonk/listmonk:latest`](https://hub.docker.com/r/listmonk/listmonk/tags?page=1&ordering=last_updated&name=latest).

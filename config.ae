@@ -1,0 +1,14 @@
+version: 1
+
+project:
+  slug: listmonk
+
+frameworks:
+  - slug: vue
+  - slug: buefy
+
+languages:
+  - slug: javascript
+  - slug: go
+
+uxui: true

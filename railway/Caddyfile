@@ -1,0 +1,43 @@
+{
+	admin off
+	persist_config off
+	auto_https off
+	servers {
+		trusted_proxies static private_ranges
+	}
+}
+
+:{$PORT} {
+	@cors {
+		header Origin "{$LISTMONK_ORIGIN_0:disabled}"
+		header Origin "{$LISTMONK_ORIGIN_1:disabled}"
+		header Origin "{$LISTMONK_ORIGIN_2:disabled}"
+		header Origin "{$LISTMONK_ORIGIN_3:disabled}"
+		header Origin "{$LISTMONK_ORIGIN_4:disabled}"
+	}
+	@preflight {
+		method OPTIONS
+		header Access-Control-Request-Method *
+	}
+
+	header +Vary Origin
+	route @cors {
+		header {
+			Access-Control-Allow-Origin "{http.request.header.Origin}"
+			Access-Control-Expose-Headers *
+			defer
+		}
+		header @preflight {
+			Access-Control-Allow-Methods "GET, POST, PUT, PATCH, DELETE, OPTIONS"
+			Access-Control-Allow-Headers "{http.request.header.Access-Control-Request-Headers}"
+			Access-Control-Max-Age 3600
+			+Vary Access-Control-Request-Method
+			+Vary Access-Control-Request-Headers
+		}
+		respond @preflight 204
+	}
+
+	reverse_proxy {$LISTMONK_app__address} {
+		header_down Content-Security-Policy "upgrade-insecure-requests"
+	}
+}

@@ -1,0 +1,40 @@
+FROM oven/bun:1.3.14 AS bun
+FROM caddy:2.11-alpine AS caddy
+
+FROM golang:1.27.3-trixie AS build
+RUN apt-get update && apt-get install -y --no-install-recommends python3 \
+    && rm -rf /var/lib/apt/lists/*
+COPY --from=bun /usr/local/bin/bun /usr/local/bin/bun
+
+WORKDIR /src
+COPY go.mod go.sum ./
+RUN go mod download
+
+COPY Makefile config.toml.sample schema.sql permissions.json ./
+COPY cmd ./cmd
+COPY internal ./internal
+COPY models ./models
+COPY queries ./queries
+COPY i18n ./i18n
+COPY static ./static
+COPY scripts/build-icons.py ./scripts/build-icons.py
+
+ARG LISTMONK_VERSION=v0.0.0
+ARG RAILWAY_GIT_COMMIT_SHA=unknown
+RUN make dist VERSION="$LISTMONK_VERSION" LAST_COMMIT="$RAILWAY_GIT_COMMIT_SHA"
+
+FROM alpine:3.23
+RUN apk add --no-cache bash ca-certificates postgresql-client shadow su-exec tini tzdata
+
+WORKDIR /listmonk
+COPY --from=build /src/listmonk ./listmonk
+COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
+COPY config.toml.sample ./config.toml
+COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
+COPY --chmod=755 railway/start.sh /usr/local/bin/start-listmonk
+COPY railway/Caddyfile /etc/caddy/Caddyfile
+
+ENV LISTMONK_app__address=127.0.0.1:9000
+EXPOSE 8080
+ENTRYPOINT ["/sbin/tini", "-g", "--", "docker-entrypoint.sh"]
+CMD ["start-listmonk"]

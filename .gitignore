@@ -3,6 +3,7 @@ static/admin/dist/
 docs/site/public/
 scripts/.icons/
 .vscode/
+.idea
 
 config.toml
 docker-compose.override.yml
