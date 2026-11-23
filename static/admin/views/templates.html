@@ -24,7 +24,7 @@
 			<form method="get" action="{{ URI "/admin/templates" }}" class="search-form">
 				{{- $d.Page.FormFields "query" -}}
 				<fieldset class="group">
-					<input name="query" aria-label="{{ .L.T "globals.buttons.search" }}" data-testid="query" placeholder="{{ .L.T "globals.buttons.search" }}" value="{{ $d.Page.Query }}" autofocus />
+					<input name="query" aria-label="{{ .L.T "globals.buttons.search" }}" data-testid="query" placeholder="{{ .L.T "globals.buttons.search" }}" value="{{ $d.Page.Query }}" />
 					<button type="submit" class="outline external" data-testid="btn-query" aria-label="{{ .L.T "globals.buttons.search" }}">{{ Icon "search" }}</button>
 				</fieldset>
 			</form>

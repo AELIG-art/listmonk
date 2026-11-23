@@ -842,10 +842,8 @@ class RichtextEditor extends HTMLElement {
     panel.querySelector('[data-rte-act="replace"]').addEventListener('click', replaceOne);
     panel.querySelector('[data-rte-act="replaceAll"]').addEventListener('click', replaceAll);
 
-    // Focus the input on open.
     panel.addEventListener('toggle', (e) => {
       if (e.newState === 'open') {
-        setTimeout(() => f('find').focus(), 0);
         if (f('find').value) {
           doFind();
         }

@@ -21,7 +21,7 @@
 			<form method="get" action="{{ $base }}" class="search-form">
 				{{- $d.Page.FormFields "query" -}}
 				<fieldset class="group">
-					<input x-init="autocomplete($el)" name="query" aria-label="{{ $root.L.T "globals.buttons.search" }}" placeholder="{{ $root.L.T "globals.buttons.search" }}" value="{{ $d.Page.Query }}" autofocus />
+					<input x-init="autocomplete($el)" name="query" aria-label="{{ $root.L.T "globals.buttons.search" }}" placeholder="{{ $root.L.T "globals.buttons.search" }}" value="{{ $d.Page.Query }}" />
 					<button type="submit" class="outline external" aria-label="{{ $root.L.T "globals.buttons.search" }}">{{ Icon "search" }}</button>
 				</fieldset>
 			</form>
