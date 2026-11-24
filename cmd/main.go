@@ -201,6 +201,14 @@ func init() {
 		initSettings(q.Query, db, ko)
 	}
 
+	// The public URL can be supplied by the deployment environment, overriding
+	// the value stored in settings. Other database settings retain precedence.
+	if rootURL := strings.TrimSpace(os.Getenv("LISTMONK_app__root_url")); rootURL != "" {
+		if err := ko.Set("app.root_url", rootURL); err != nil {
+			lo.Fatalf("error setting root URL from environment: %v", err)
+		}
+	}
+
 	// Prepare queries.
 	queries = prepareQueries(qMap, db, ko)
 }

@@ -119,7 +119,7 @@ function component(settings, userRoles, listRoles) {
       this.$nextTick(() => this.buildSearchIndex());
       this.$watch("form['security.oidc'].enabled", (enabled) => {
         if (enabled && !this.form['security.oidc'].redirect_url) {
-          this.form['security.oidc'].redirect_url = `${this.form['app.root_url'].replace(/\/+$/, '')}/auth/oidc`;
+          this.form['security.oidc'].redirect_url = `${config.root_url.replace(/\/+$/, '')}/auth/oidc`;
         }
       });
     },

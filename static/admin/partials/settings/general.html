@@ -1,18 +1,12 @@
 {{ define "settings-general" -}}
 <div class="settings-items">
-	<fieldset class="card" data-keywords="site name root url logo favicon language locale branding domain title">
+	<fieldset class="card" data-keywords="site name logo favicon language locale branding title">
 		<legend>{{ .L.T "globals.terms.general" }}</legend>
 		<label data-field>
 			{{ .L.T "settings.general.siteName" }}
 			<input name="app.site_name" maxlength="300" required x-model="form['app.site_name']" />
 		</label>
 
-		<label data-field>
-			{{ .L.T "settings.general.rootURL" }}
-			<input name="app.root_url" type="url" pattern="https?://.*" maxlength="300" required
-				placeholder="https://mail.example.com" x-model="form['app.root_url']" />
-			<small data-hint>{{ .L.T "settings.general.rootURLHelp" }}</small>
-		</label>
 
 		<label data-field>
 			{{ .L.T "settings.general.logoURL" }}
