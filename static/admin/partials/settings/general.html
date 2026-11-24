@@ -41,9 +41,8 @@
             {{ .L.T "quota.enable" }}
             <input type="checkbox" role="switch" :checked="quotaEnabled"
                 {{ if ge $quota.Limit 0 }}checked{{ end }}
-                {{ if $quota.Locked }}disabled aria-describedby="quota-lock"{{ else }}@change="toggleQuota($event.target.checked)"{{ end }} />
+                {{ if $quota.Locked }}disabled{{ else }}@change="toggleQuota($event.target.checked)"{{ end }} />
         </label>
-        {{ if $quota.Locked }}<small id="quota-lock" data-hint>{{ .L.T "quota.lock" }}</small>{{ end }}
         <label data-field x-show="quotaEnabled" x-cloak>
             {{ .L.T "quota.limit" }}
             <input type="number" min="0" step="1" required x-model.number="form['app.monthly_email_limit']"
