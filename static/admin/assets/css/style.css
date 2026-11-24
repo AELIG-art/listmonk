@@ -582,6 +582,17 @@ ol.no {
     padding: 0;
 }
 
+/* Keep popover notifications sized to their content, including in grid stacks. */
+.toast-container:popover-open {
+    height: fit-content;
+    max-height: calc(100dvh - 2 * var(--space-4));
+}
+.toast-container > .toast {
+    align-self: start;
+    min-width: min(20rem, calc(100vw - 2 * var(--space-4)));
+    overflow-wrap: anywhere;
+}
+
 /* Layout */
 body[data-sidebar-layout] {
     display: block;
