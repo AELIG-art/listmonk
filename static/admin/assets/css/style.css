@@ -2024,8 +2024,11 @@ section.users {
 
 /* Public admin pages */
 body.admin-public {
+    min-height: 100dvh;
     height: auto;
-    padding: 60px 16px 30px;
+    display: grid;
+    place-items: center;
+    padding: 2rem 1rem;
 
     .page-title {
         margin-bottom: var(--space-6);
@@ -2039,7 +2042,11 @@ body.admin-public {
 
     .auth-logo img {
         width: auto;
-        max-height: 24px;
+        max-height: 40px;
+    }
+
+    .card {
+        padding: clamp(1.5rem, 5vw, 2rem);
     }
 }
 

@@ -225,3 +225,23 @@ footer.container {
     max-width: none;
   }
 }
+
+/* Match the admin workspace identity. */
+.header .logo a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: #202e49;
+}
+.header .logo img.default-logo {
+  width: 40px;
+  height: 40px;
+}
+.header .brand-name {
+  display: grid;
+  gap: 2px;
+  line-height: 1.15;
+}
+.header .brand-name strong { font-size: 1.375rem; }
+.header .brand-name small { color: #667085; font-size: .8125rem; }
