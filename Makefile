@@ -2,7 +2,7 @@
 LAST_COMMIT := $(or $(shell git rev-parse --short HEAD 2> /dev/null),$(shell head -n 1 VERSION | grep -oP -m 1 "^[a-z0-9]+$$"),"")
 
 # Try to get the semver from 1) git 2) the VERSION file 3) fallback.
-VERSION := $(or $(LISTMONK_VERSION),$(shell git describe --tags --abbrev=0 2> /dev/null),$(shell grep -oP 'tag: \Kv\d+\.\d+\.\d+(-[a-zA-Z0-9.-]+)?' VERSION),"v0.0.0")
+VERSION := $(or $(AELIG_MAIL_VERSION),$(LISTMONK_VERSION),$(shell git describe --tags --abbrev=0 2> /dev/null),$(shell grep -oP 'tag: \Kv\d+\.\d+\.\d+(-[a-zA-Z0-9.-]+)?' VERSION),"v0.0.0")
 
 BUILDDATE := $(if $(SOURCE_DATE_EPOCH),$(shell date -u -d @$(SOURCE_DATE_EPOCH) +"%Y-%m-%dT%H:%M:%S%z"),$(shell date -u +"%Y-%m-%dT%H:%M:%S%z"))
 BUILDSTR := ${VERSION} (\#${LAST_COMMIT} $(BUILDDATE))
@@ -27,7 +27,7 @@ FRONTEND_DEPS = \
 	$(FRONTEND)/build.mjs \
 	$(shell find $(FRONTEND)/assets -type f)
 
-BIN := listmonk
+BIN := aelig-mail
 STATIC := config.toml.sample \
 	schema.sql queries:/queries permissions.json \
 	static/public:/public \
@@ -51,7 +51,7 @@ $(STUFFBIN):
 .PHONY: FORCE
 FORCE:
 
-# Build the backend to ./listmonk.
+# Build the backend to ./aelig-mail.
 $(BIN): FORCE $(SRC) go.mod go.sum schema.sql $(SQL) permissions.json
 	CGO_ENABLED=0 go build -o ${BIN} -ldflags="-s -w -X 'main.buildString=${BUILDSTR}' -X 'main.versionString=${VERSION}'" ./cmd
 
@@ -91,7 +91,7 @@ build-frontend: $(FRONTEND_DIST)
 test:
 	go test ./...
 
-# Bundle all static assets including the SSR admin frontend into the ./listmonk binary
+# Bundle all static assets including the SSR admin frontend into the ./aelig-mail binary
 # using stuffbin.
 .PHONY: dist
 dist: $(STUFFBIN) build build-frontend

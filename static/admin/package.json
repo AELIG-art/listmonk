@@ -1,9 +1,9 @@
 {
-  "name": "listmonk-admin",
+  "name": "aelig-mail-admin",
   "version": "0.0.0",
   "private": true,
   "type": "module",
-  "description": "Build pipeline for the listmonk SSR admin frontend (Bun + Alpine + Oat).",
+  "description": "Build pipeline for the AELIG Mail SSR admin frontend (Bun + Alpine + Oat).",
   "scripts": {
     "build": "bun ./build.mjs",
     "watch": "bun ./build.mjs --watch"

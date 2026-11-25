@@ -1,22 +1,21 @@
 version: 2
+project_name: aelig-mail
 
 snapshot:
-  version_template: "{{ .Env.LISTMONK_VERSION }}"
+  version_template: "{{ .Env.AELIG_MAIL_VERSION }}"
 
 # GoReleaser config for nightly builds
 
 env:
   - GO111MODULE=on
   - CGO_ENABLED=0
-  - GITHUB_ORG=knadh
-  - DOCKER_ORG=listmonk
 
 before:
   hooks:
     - make build-frontend
 
 builds:
-  - binary: listmonk
+  - binary: aelig-mail
     main: ./cmd
     goos:
       - linux
@@ -36,7 +35,7 @@ builds:
       - goos: windows
         goarch: arm
     ldflags:
-      - -s -w -X "main.buildString=nightly ({{ .ShortCommit }} {{ .Date }}, {{ .Os }}/{{ .Arch }})" -X "main.versionString={{ .Env.LISTMONK_VERSION }}"
+      - -s -w -X "main.buildString=nightly ({{ .ShortCommit }} {{ .Date }}, {{ .Os }}/{{ .Arch }})" -X "main.versionString={{ .Env.AELIG_MAIL_VERSION }}"
 
     hooks:
       # stuff executables with static assets.
@@ -44,7 +43,7 @@ builds:
 
 archives:
   - formats: [tar.gz]
-    name_template: "listmonk_nightly_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
+    name_template: "aelig-mail_nightly_{{ .Os }}_{{ .Arch }}{{ if .Arm }}v{{ .Arm }}{{ end }}"
     files:
       - README.md
       - LICENSE
@@ -54,16 +53,15 @@ dockers:
     goos: linux
     goarch: amd64
     ids:
-      - listmonk
+      - aelig-mail
     image_templates:
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-amd64"
-      - "ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-amd64"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-amd64"
     build_flag_templates:
       - --platform=linux/amd64
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
       - --label=org.opencontainers.image.version=nightly
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -76,16 +74,15 @@ dockers:
     goos: linux
     goarch: arm64
     ids:
-      - listmonk
+      - aelig-mail
     image_templates:
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-arm64v8"
-      - "ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-arm64v8"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-arm64v8"
     build_flag_templates:
       - --platform=linux/arm64/v8
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
       - --label=org.opencontainers.image.version=nightly
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -99,16 +96,15 @@ dockers:
     goarch: arm
     goarm: 6
     ids:
-      - listmonk
+      - aelig-mail
     image_templates:
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-armv6"
-      - "ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-armv6"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-armv6"
     build_flag_templates:
       - --platform=linux/arm/v6
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
       - --label=org.opencontainers.image.version=nightly
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -122,16 +118,15 @@ dockers:
     goarch: arm
     goarm: 7
     ids:
-      - listmonk
+      - aelig-mail
     image_templates:
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-armv7"
-      - "ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-armv7"
+      - "ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-armv7"
     build_flag_templates:
       - --platform=linux/arm/v7
       - --label=org.opencontainers.image.title={{ .ProjectName }}
       - --label=org.opencontainers.image.description={{ .ProjectName }}
-      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
-      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.url=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
+      - --label=org.opencontainers.image.source=https://github.com/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}
       - --label=org.opencontainers.image.version=nightly
       - --label=org.opencontainers.image.created={{ time "2006-01-02T15:04:05Z07:00" }}
       - --label=org.opencontainers.image.revision={{ .FullCommit }}
@@ -142,18 +137,12 @@ dockers:
       - docker-entrypoint.sh
 
 docker_manifests:
-  - name_template: "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly"
+  - name_template: ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly
     image_templates:
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-amd64"
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-arm64v8"
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-armv6"
-      - "{{ .Env.DOCKER_ORG }}/{{ .ProjectName }}:nightly-armv7"
-  - name_template: ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly
-    image_templates:
-      - ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-amd64
-      - ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-arm64v8
-      - ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-armv6
-      - ghcr.io/{{ .Env.GITHUB_ORG }}/{{ .ProjectName }}:nightly-armv7
+      - ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-amd64
+      - ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-arm64v8
+      - ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-armv6
+      - ghcr.io/{{ .Env.GITHUB_REPOSITORY_OWNER }}/{{ .ProjectName }}:nightly-armv7
 
 changelog:
   disable: true

@@ -45,7 +45,6 @@
 							<textarea name="query" data-testid="query" rows="6" placeholder="subscribers.name LIKE '%user%' or subscribers.status='blocklisted'" x-model="query" :disabled="!isSqlOpen && !advanced"></textarea>
 							<small data-hint>
 								{{ .L.T "subscribers.advancedQueryHelp" }}.
-								<a href="https://listmonk.app/docs/querying-and-segmentation" target="_blank" rel="noopener noreferrer">{{ .L.T "globals.buttons.learnMore" }}.</a>
 							</small>
 						</div>
 						<div class="hstack justify-end buttons">

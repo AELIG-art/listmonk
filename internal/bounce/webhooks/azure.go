@@ -140,7 +140,8 @@ func (a *Azure) ProcessBounce(req *http.Request, b []byte) ([]models.Bounce, err
 
 func (a *Azure) verifyAuth(req *http.Request) error {
 	const (
-		defaultSecretHeader = "X-Listmonk-Webhook-Secret"
+		defaultSecretHeader = "X-AELIG-Mail-Webhook-Secret"
+		legacySecretHeader  = "X-Listmonk-Webhook-Secret"
 		querySecretParam    = "code"
 	)
 
@@ -163,6 +164,11 @@ func (a *Azure) verifyAuth(req *http.Request) error {
 	}
 	headerSecret := strings.TrimSpace(req.Header.Get(headerName))
 	if secretsEqual(a.sharedSecret, headerSecret) {
+		return nil
+	}
+
+	// Accept the previous default header for existing Azure Event Grid integrations.
+	if a.sharedSecretHeader == "" && secretsEqual(a.sharedSecret, strings.TrimSpace(req.Header.Get(legacySecretHeader))) {
 		return nil
 	}
 

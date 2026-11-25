@@ -174,7 +174,7 @@ func (p *Postback) exec(method, rURL string, reqBody []byte, headers http.Header
 	} else {
 		req.Header = http.Header{}
 	}
-	req.Header.Set("User-Agent", "listmonk")
+	req.Header.Set("User-Agent", "AELIG Mail")
 
 	// Optional BasicAuth.
 	if p.authStr != "" {

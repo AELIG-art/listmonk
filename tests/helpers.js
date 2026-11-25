@@ -2,12 +2,12 @@ import { execSync, execFileSync, spawn } from 'node:child_process';
 import { setTimeout as sleep } from 'node:timers/promises';
 import { expect } from '@playwright/test';
 
-const BASE_URL = process.env.LISTMONK_URL || 'http://localhost:9000';
+const BASE_URL = process.env.AELIG_MAIL_URL || 'http://localhost:9000';
 const MAILHOG_URL = process.env.MAILHOG_URL || 'http://localhost:8025';
 const ROOT = '..';
-const CONFIG = process.env.LISTMONK_CONFIG || process.env.DEV_CONFIG || 'config.toml';
+const CONFIG = process.env.AELIG_MAIL_CONFIG || process.env.DEV_CONFIG || 'config.toml';
 const AUTH_FILE = new URL('.auth/admin.json', import.meta.url).pathname;
-const ENV = { ...process.env, LISTMONK_ADMIN_USER: 'admin', LISTMONK_ADMIN_PASSWORD: 'listmonk' };
+const ENV = { ...process.env, AELIG_MAIL_ADMIN_USER: 'admin', AELIG_MAIL_ADMIN_PASSWORD: 'aelig-mail' };
 
 // A single SMTP server pointing at MailHog so tests capture (and can assert on) mail.
 const MAILHOG_SMTP = JSON.stringify([{
@@ -42,7 +42,7 @@ export async function login(context) {
   const page = await context.newPage();
   await page.goto(`${BASE_URL}/admin/login?next=/admin/lists`);
   await page.getByLabel('Username').fill('admin');
-  await page.getByLabel('Password').fill('listmonk');
+  await page.getByLabel('Password').fill('aelig-mail');
   await page.getByRole('button', { name: 'Login' }).click();
   await page.waitForURL('**/admin/lists');
   await context.storageState({ path: AUTH_FILE });
@@ -61,17 +61,17 @@ export async function getMail() {
   return (await response.json()).items;
 }
 
-// Run a SQL statement against the listmonk DB. Credentials come from the
-// LISTMONK_db__* env, falling back to config.toml defaults.
+// Run a SQL statement against the AELIG Mail database. Credentials come from the
+// AELIG_MAIL_db__* env, falling back to config.toml defaults.
 export function psql(sql) {
   const args = [
-    '-h', process.env.LISTMONK_db__host || 'localhost',
-    '-p', process.env.LISTMONK_db__port || '5432',
-    '-U', process.env.LISTMONK_db__user || 'listmonk',
-    '-d', process.env.LISTMONK_db__database || 'listmonk',
+    '-h', process.env.AELIG_MAIL_db__host || 'localhost',
+    '-p', process.env.AELIG_MAIL_db__port || '5432',
+    '-U', process.env.AELIG_MAIL_db__user || 'aelig_mail',
+    '-d', process.env.AELIG_MAIL_db__database || 'aelig_mail',
     '-v', 'ON_ERROR_STOP=1', '-c', sql,
   ];
-  const env = { ...process.env, PGPASSWORD: process.env.LISTMONK_db__password || 'listmonk' };
+  const env = { ...process.env, PGPASSWORD: process.env.AELIG_MAIL_db__password || 'change-me' };
   const options = { env, stdio: ['ignore', 'ignore', 'inherit'] };
   if (process.env.PSQL_CONTAINER) {
     execFileSync('docker', ['exec', '-e', 'PGPASSWORD', process.env.PSQL_CONTAINER, 'psql', ...args], options);
@@ -80,7 +80,7 @@ export function psql(sql) {
   }
 }
 
-// Point listmonk's SMTP config at MailHog on the freshly installed DB.
+// Point AELIG Mail's SMTP config at MailHog on the freshly installed DB.
 function configureSMTP() {
   psql(`UPDATE settings SET value = '${MAILHOG_SMTP}' WHERE key = 'smtp';`);
 }
@@ -98,17 +98,17 @@ function configureBounces() {
         UPDATE settings SET value = '${actions}' WHERE key = 'bounce.actions';`);
 }
 
-// Wipe and reinstall the DB by restarting listmonk, then refresh the login
+// Wipe and reinstall the DB by restarting AELIG Mail, then refresh the login
 // session (a reinstall clears the DB-backed session). The schema can't be
 // reinstalled under a running server, so the process is killed and relaunched.
 export async function resetDB(browser, { bounces = false } = {}) {
-  try { execSync('pkill -9 listmonk', { stdio: 'ignore' }); } catch { /* none running */ }
-  execFileSync('./listmonk', ['--config', CONFIG, '--install', '--yes'], { cwd: ROOT, env: ENV, stdio: 'inherit' });
+  try { execSync('pkill -9 aelig-mail', { stdio: 'ignore' }); } catch { /* none running */ }
+  execFileSync('./aelig-mail', ['--config', CONFIG, '--install', '--yes'], { cwd: ROOT, env: ENV, stdio: 'inherit' });
   configureSMTP();
   if (bounces) {
     configureBounces();
   }
-  spawn('./listmonk', ['--config', CONFIG, '--static-dir', 'static'], {
+  spawn('./aelig-mail', ['--config', CONFIG, '--static-dir', 'static'], {
     cwd: ROOT, env: ENV, detached: true, stdio: 'ignore',
   }).unref();
 
@@ -129,15 +129,15 @@ export async function resetDB(browser, { bounces = false } = {}) {
 // Reinstall the DB with no admin user so the app boots into first-time user
 // setup mode. Unlike resetDB, it doesn't create a session (there's no user yet).
 export async function resetDBBlank() {
-  try { execSync('pkill -9 listmonk', { stdio: 'ignore' }); } catch { /* none running */ }
+  try { execSync('pkill -9 aelig-mail', { stdio: 'ignore' }); } catch { /* none running */ }
 
   const env = { ...process.env };
-  delete env.LISTMONK_ADMIN_USER;
-  delete env.LISTMONK_ADMIN_PASSWORD;
+  delete env.AELIG_MAIL_ADMIN_USER;
+  delete env.AELIG_MAIL_ADMIN_PASSWORD;
 
-  execFileSync('./listmonk', ['--config', CONFIG, '--install', '--yes'], { cwd: ROOT, env, stdio: 'inherit' });
+  execFileSync('./aelig-mail', ['--config', CONFIG, '--install', '--yes'], { cwd: ROOT, env, stdio: 'inherit' });
   configureSMTP();
-  spawn('./listmonk', ['--config', CONFIG, '--static-dir', 'static'], {
+  spawn('./aelig-mail', ['--config', CONFIG, '--static-dir', 'static'], {
     cwd: ROOT, env, detached: true, stdio: 'ignore',
   }).unref();
 

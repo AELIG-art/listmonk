@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "自定义 CSS 和 JavaScript 以应用于公共页面。",
     "settings.bounces.azureSharedSecret": "Azure 事件网格共享密钥",
     "settings.bounces.azureSharedSecretHeader": "Azure 共享密钥 HTTP 头名称",
-    "settings.bounces.azureSharedSecretHeaderHelp": "读取 Azure 共享密钥的可选 HTTP 头名称。如果为空，AELIG Mail 使用 X-Listmonk-Webhook-Secret。",
+    "settings.bounces.azureSharedSecretHeaderHelp": "读取 Azure 共享密钥的可选 HTTP 头名称。如果为空，AELIG Mail 使用 X-AELIG-Mail-Webhook-Secret。",
     "settings.bounces.azureSharedSecretHelp": "提供为 Azure 事件网格 webhook 端点配置的共享密钥。",
     "settings.bounces.count": "反弹计数",
     "settings.bounces.countHelp": "每个订阅者的反弹次数",

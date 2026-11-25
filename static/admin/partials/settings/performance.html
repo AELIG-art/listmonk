@@ -56,7 +56,6 @@
 			<label data-field :aria-disabled="!form['app.cache_slow_queries']">
 				{{ .L.T "settings.maintenance.cron" }}
 				<input placeholder="0 3 * * *" :disabled="!form['app.cache_slow_queries']" x-model="form['app.cache_slow_queries_interval']" />
-				<a href="https://listmonk.app/docs/maintenance/performance/" target="_blank" rel="noopener noreferrer" data-hint>
 					{{ Icon "link-2" }} {{ .L.T "globals.buttons.learnMore" }}
 				</a>
 			</label>

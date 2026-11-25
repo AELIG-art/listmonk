@@ -85,8 +85,9 @@ func (p *Postmark) ProcessBounce(b []byte, c *echo.Context) ([]models.Bounce, er
 
 	// Look for the campaign ID in headers.
 	campUUID := ""
-	if v, ok := n.Metadata["X-Listmonk-Campaign"]; ok {
-		campUUID = v
+	campUUID = n.Metadata[models.EmailHeaderCampaignUUID]
+	if campUUID == "" {
+		campUUID = n.Metadata["X-Listmonk-Campaign"]
 	}
 
 	return []models.Bounce{{

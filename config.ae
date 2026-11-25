@@ -1,7 +1,7 @@
 version: 1
 
 project:
-  slug: listmonk
+  slug: aelig-mail
 
 frameworks:
   - slug: vue

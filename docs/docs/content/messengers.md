@@ -1,18 +1,18 @@
 # Messengers
 
-listmonk supports multiple custom messaging backends in additional to the default SMTP e-mail backend, enabling not just e-mail campaigns, but arbitrary message campaigns such as SMS, FCM notifications etc.
+AELIG Mail supports multiple custom messaging backends in additional to the default SMTP e-mail backend, enabling not just e-mail campaigns, but arbitrary message campaigns such as SMS, FCM notifications etc.
 
 A *Messenger* is a web service that accepts a campaign message pushed to it as a JSON request, which the service can in turn broadcast as SMS, FCM etc. Messengers are registered in the *Settings -> Messengers* UI, and can be selected on individual campaigns.
 
 Messengers support optional BasicAuth authentication. `Plain text` format for campaign content is ideal for messengers such as SMS and FCM.
 
-When a campaign starts, listmonk POSTs messages in the following format to the selected messenger's endpoint. The endpoint should return a `200 OK` response in case of a successful request.
+When a campaign starts, AELIG Mail POSTs messages in the following format to the selected messenger's endpoint. The endpoint should return a `200 OK` response in case of a successful request.
 
-The address required to broadcast the message, for instance, a phone number or an FCM ID, is expected to be stored and relayed as [subscriber attributes](concepts.md/#attributes). 
+The address required to broadcast the message, for instance, a phone number or an FCM ID, is expected to be stored and relayed as [subscriber attributes](concepts.md/#attributes).
 
 ```json
 {
-	"subject": "Welcome to listmonk",
+	"subject": "Welcome to AELIG Mail",
 	"body": "The message body",
 	"content_type": "plain",
 	"recipients": [{
@@ -40,9 +40,3 @@ Following is a list of HTTP messenger servers that connect to various backends.
 
 | Name                                                                                 | Backend          |
 |:-------------------------------------------------------------------------------------|:-----------------|
-| [listmonk-messenger](https://github.com/joeirimpan/listmonk-messenger)               | AWS Pinpoint SMS |
-| [listmonk-verimor-gateway](https://github.com/antandros/listmonk-verimor-gateway)    | Verimor          |
-| [listmonk-mailersend](https://github.com/tkawczynski/listmonk-mailersend)            | Mailersend       |
-| [listmonk-novu-messenger](https://github.com/Codepowercode/listmonk-novu-messenger)  | Novu             |
-| [listmonk-push-messenger](https://github.com/shyamkrishna21/listmonk-push-messenger) | Google FCM       |
-| [listmonk-resend](https://github.com/derekantrican/listmonk-resend)                  | Resend           |

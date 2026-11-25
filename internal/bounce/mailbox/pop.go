@@ -46,6 +46,8 @@ var (
 	headerLookups = []bounceHeaders{
 		{models.EmailHeaderCampaignUUID, regexp.MustCompile(`(?mi)(?:^` + models.EmailHeaderCampaignUUID + `:\s+?)([a-z0-9\-]{36})`)},
 		{models.EmailHeaderSubscriberUUID, regexp.MustCompile(`(?mi)(?:^` + models.EmailHeaderSubscriberUUID + `:\s+?)([a-z0-9\-]{36})`)},
+		{"X-Listmonk-Campaign", regexp.MustCompile(`(?mi)(?:^X-Listmonk-Campaign:\s+?)([a-z0-9\-]{36})`)},
+		{"X-Listmonk-Subscriber", regexp.MustCompile(`(?mi)(?:^X-Listmonk-Subscriber:\s+?)([a-z0-9\-]{36})`)},
 		{models.EmailHeaderDate, regexp.MustCompile(`(?mi)(?:^` + models.EmailHeaderDate + `:\s+?)([\w,\,\ ,:,+,-]*(?:\(?:\w*\))?)`)},
 		{models.EmailHeaderFrom, regexp.MustCompile(`(?mi)(?:^` + models.EmailHeaderFrom + `:\s+?)(.*)`)},
 		{models.EmailHeaderSubject, regexp.MustCompile(`(?mi)(?:^` + models.EmailHeaderSubject + `:\s+?)(.*)`)},
@@ -240,6 +242,12 @@ func parseBounce(raw []byte) ([]models.Bounce, error) {
 		}
 	}
 
+	if hdr[models.EmailHeaderCampaignUUID] == "" {
+		hdr[models.EmailHeaderCampaignUUID] = hdr["X-Listmonk-Campaign"]
+	}
+	if hdr[models.EmailHeaderSubscriberUUID] == "" {
+		hdr[models.EmailHeaderSubscriberUUID] = hdr["X-Listmonk-Subscriber"]
+	}
 	date, _ := mail.ParseDate(hdr[models.EmailHeaderDate])
 	if date.IsZero() {
 		date = time.Now()

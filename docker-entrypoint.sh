@@ -39,9 +39,9 @@ load_secret_files() {
   old_ifs="$IFS"
   IFS='
 '
-  # Capture all env variables starting with LISTMONK_ and ending with _FILE.
-  # It's value is assumed to be a file path with its actual value.
-  for line in $(env | grep '^LISTMONK_.*_FILE='); do
+  # Capture application env variables ending with _FILE.
+  # Their values are file paths containing the actual secrets.
+  for line in $(env | grep -E '^(AELIG_MAIL|LISTMONK)_.*_FILE='); do
     var="${line%%=*}"
     fpath="${line#*=}"
 
@@ -56,15 +56,15 @@ load_secret_files() {
   IFS="$old_ifs"
 }
 
-# Load env variables from files if LISTMONK_*_FILE variables are set.
+# Load env variables from files if *_FILE variables are set.
 load_secret_files
 
 # Try to set the ownership of the app directory to the app user.
-if ! chown -R ${PUID}:${PGID} /listmonk 2>/dev/null; then
-  echo "Warning: Failed to change ownership of /listmonk. Readonly volume?"
+if ! chown -R ${PUID}:${PGID} /aelig-mail 2>/dev/null; then
+  echo "Warning: Failed to change ownership of /aelig-mail. Readonly volume?"
 fi
 
-echo "Launching listmonk with user=[${USER_NAME}] group=[${GROUP_NAME}] PUID=[${PUID}] PGID=[${PGID}]"
+echo "Launching AELIG Mail with user=[${USER_NAME}] group=[${GROUP_NAME}] PUID=[${PUID}] PGID=[${PGID}]"
 
 # If running as root and PUID is not 0, then execute command as PUID
 # this allows us to run the container as a non-root user

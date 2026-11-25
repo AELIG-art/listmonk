@@ -1,8 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 import { launchOptions } from './browser.js';
 
-// listmonk root address (see ../config.toml).
-const BASE_URL = process.env.LISTMONK_URL || 'http://localhost:9000';
+// AELIG Mail root address (see ../config.toml).
+const BASE_URL = process.env.AELIG_MAIL_URL || 'http://localhost:9000';
 const MAILHOG_URL = process.env.MAILHOG_URL || 'http://localhost:8025';
 
 export default defineConfig({
@@ -13,7 +13,7 @@ export default defineConfig({
   // Log in once and save the session before any tests run.
   globalSetup: './global-setup.js',
 
-  // Kill the listmonk instance resetDB().
+  // Kill the AELIG Mail instance resetDB().
   globalTeardown: './global-teardown.js',
 
   webServer: [
@@ -23,15 +23,15 @@ export default defineConfig({
       url: MAILHOG_URL,
       reuseExistingServer: false,
     }]),
-    // Create a fresh listmonk DB instance for every test run.
+    // Create a fresh AELIG Mail database instance for every test run.
     {
-      command: 'pkill -9 listmonk; ./listmonk --config "${LISTMONK_CONFIG:-${DEV_CONFIG:-config.toml}}" --install --yes && ./listmonk --config "${LISTMONK_CONFIG:-${DEV_CONFIG:-config.toml}}" --static-dir static',
+      command: 'pkill -9 aelig-mail; ./aelig-mail --config "${AELIG_MAIL_CONFIG:-${DEV_CONFIG:-config.toml}}" --install --yes && ./aelig-mail --config "${AELIG_MAIL_CONFIG:-${DEV_CONFIG:-config.toml}}" --static-dir static',
       cwd: '..',
       stdout: 'pipe',
       stderr: 'pipe',
       url: `${BASE_URL}/health`,
       reuseExistingServer: false,
-      env: { LISTMONK_ADMIN_USER: 'admin', LISTMONK_ADMIN_PASSWORD: 'listmonk' },
+      env: { AELIG_MAIL_ADMIN_USER: 'admin', AELIG_MAIL_ADMIN_PASSWORD: 'aelig-mail' },
     },
   ],
 

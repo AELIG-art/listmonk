@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "套用至公開頁面的自訂 CSS 和 JavaScript。",
     "settings.bounces.azureSharedSecret": "Azure Event Grid 共享密鑰",
     "settings.bounces.azureSharedSecretHeader": "Azure 共享密鑰標頭名稱",
-    "settings.bounces.azureSharedSecretHeaderHelp": "可選的 HTTP 標頭名稱，用以讀取 Azure 共享密鑰。若為空白，AELIG Mail 使用 X-Listmonk-Webhook-Secret。",
+    "settings.bounces.azureSharedSecretHeaderHelp": "可選的 HTTP 標頭名稱，用以讀取 Azure 共享密鑰。若為空白，AELIG Mail 使用 X-AELIG-Mail-Webhook-Secret。",
     "settings.bounces.azureSharedSecretHelp": "請提供您為 Azure Event Grid webhook 端點設定的共享密鑰。",
     "settings.bounces.count": "退回信合計",
     "settings.bounces.countHelp": "每個訂閱者的退回次數",

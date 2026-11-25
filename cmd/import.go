@@ -128,7 +128,7 @@ func (a *App) ImportSubscribers(c *echo.Context) error {
 	defer src.Close()
 
 	// Copy it to a temp location.
-	out, err := os.CreateTemp("", "listmonk")
+	out, err := os.CreateTemp("", "aelig-mail")
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError,
 			a.i18n.Ts("globals.messages.errorCopyingFile", "error", err.Error()))

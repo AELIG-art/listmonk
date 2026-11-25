@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "सार्वजनिक पृष्ठों पर लागू करने के लिए कस्टम CSS और JavaScript।",
     "settings.bounces.azureSharedSecret": "Azure Event Grid साझा सीक्रेट",
     "settings.bounces.azureSharedSecretHeader": "Azure साझा सीक्रेट हेडर का नाम",
-    "settings.bounces.azureSharedSecretHeaderHelp": "वैकल्पिक HTTP हेडर नाम, जिससे Azure साझा सीक्रेट पढ़ा जाए। खाली होने पर AELIG Mail X-Listmonk-Webhook-Secret का उपयोग करता है।",
+    "settings.bounces.azureSharedSecretHeaderHelp": "वैकल्पिक HTTP हेडर नाम, जिससे Azure साझा सीक्रेट पढ़ा जाए। खाली होने पर AELIG Mail X-AELIG-Mail-Webhook-Secret का उपयोग करता है।",
     "settings.bounces.azureSharedSecretHelp": "अपने Azure Event Grid वेबहुक एंडपॉइंट के लिए कॉन्फ़िगर किया गया साझा सीक्रेट दें।",
     "settings.bounces.count": "बाउंस संख्या",
     "settings.bounces.countHelp": "प्रति सदस्य बाउंस की संख्या",

@@ -1,8 +1,8 @@
 {
-  "name": "listmonk-tests",
+  "name": "aelig-mail-tests",
   "private": true,
   "type": "module",
-  "description": "E2E tests for listmonk admin.",
+  "description": "E2E tests for AELIG Mail admin.",
   "scripts": {
     "test": "playwright test",
     "test:ui": "playwright test --ui"

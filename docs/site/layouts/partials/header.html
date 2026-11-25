@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>{{ .Title }}</title>
-  <meta name="description" content="{{with .Description }}{{ . }}{{else}}Send e-mail campaigns and transactional e-mails. High performance and features packed into one app.{{end}}" />
+  <title>{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · AELIG Mail{{ end }}</title>
+  <meta name="description" content="{{with .Description }}{{ . }}{{else}}AELIG Mail is a self-hosted platform for newsletters, mailing lists, and transactional email campaigns.{{end}}" />
+  <meta property="og:description" content="{{with .Description }}{{ . }}{{else}}AELIG Mail is a self-hosted platform for newsletters, mailing lists, and transactional email campaigns.{{end}}" />
   <meta name="keywords" content="{{ if .Keywords }}{{ range .Keywords }}{{ . }}, {{ end }}{{else if isset .Params "tags" }}{{ range .Params.tags }}{{ . }}, {{ end }}{{end}}">
   <link rel="canonical" href="{{ .Permalink }}">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,9 +14,9 @@
   <link href="{{ .Site.BaseURL }}static/style.css" rel="stylesheet" type="text/css" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-  <link rel="icon" href="{{ .Site.BaseURL }}static/images/favicon.webp" type="image/webp" />
+  <link rel="icon" href="{{ .Site.BaseURL }}static/images/logo.svg" type="image/svg+xml" />
 
-  <meta property="og:title" content="{{ .Title }}" />
+  <meta property="og:title" content="{{ if .IsHome }}{{ .Site.Title }}{{ else }}{{ .Title }} · AELIG Mail{{ end }}" />
   {{ if .Params.thumbnail }}
     <link rel="image_src" href="{{ .Site.BaseURL }}static/images/{{ .Params.thumbnail }}" />
     <meta property="og:image" content="{{ .Site.BaseURL }}static/images/{{ .Params.thumbnail }}" />
@@ -27,12 +28,10 @@
 <body>
 <nav data-topnav>
   <div class="container hstack justify-between">
-    <a href="{{ .Site.BaseURL }}" class="logo" aria-label="listmonk home">{{ readFile "static/static/images/logo.svg" | safeHTML }}</a>
+    <a href="{{ .Site.BaseURL }}" class="logo" aria-label="AELIG Mail home">{{ readFile "static/static/images/logo.svg" | safeHTML }}</a>
     <div class="hstack gap-6">
-      <a href="/#download">Download</a>
-      <a href="/#hosting">Hosting</a>
-      <a href="/docs">Docs</a>
-      <span class="github-btn"><a class="github-button" href="https://github.com/knadh/listmonk" data-size="large" data-show-count="true" aria-label="knadh/listmonk on GitHub">GitHub</a></span>
+      <a href="{{ .Site.BaseURL }}#download">Download</a>
+      <a href="{{ .Site.BaseURL }}docs">Docs</a>
     </div>
   </div>
 </nav>

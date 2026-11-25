@@ -13,9 +13,9 @@ services:
   db:
     image: postgres:18
     environment:
-      - POSTGRES_PASSWORD=listmonk-dev
-      - POSTGRES_USER=listmonk-dev
-      - POSTGRES_DB=listmonk-dev
+      - POSTGRES_PASSWORD=aelig-mail-dev
+      - POSTGRES_USER=aelig_mail_dev
+      - POSTGRES_DB=aelig_mail_dev
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -h 127.0.0.1 -U $$POSTGRES_USER -d $$POSTGRES_DB"]
@@ -24,7 +24,7 @@ services:
       retries: 30
     volumes:
       - type: volume
-        source: listmonk-dev-db
+        source: aelig-mail-dev-db
         target: /var/lib/postgresql
 
   dev:
@@ -34,10 +34,10 @@ services:
     init: true
     environment:
       DEV_CONFIG: dev/config.toml
-      LISTMONK_db__host: db
-      LISTMONK_db__user: listmonk-dev
-      LISTMONK_db__password: listmonk-dev
-      LISTMONK_db__database: listmonk-dev
+      AELIG_MAIL_db__host: db
+      AELIG_MAIL_db__user: aelig_mail_dev
+      AELIG_MAIL_db__password: aelig-mail-dev
+      AELIG_MAIL_db__database: aelig_mail_dev
       MAILHOG_EXTERNAL: "1"
       MAILHOG_URL: http://localhost:8025
       MAILHOG_SMTP_HOST: localhost
@@ -60,7 +60,7 @@ services:
           nocopy: true
 
 volumes:
-  listmonk-dev-db:
+  aelig-mail-dev-db:
   go-mod:
   go-build:
   admin-dist:

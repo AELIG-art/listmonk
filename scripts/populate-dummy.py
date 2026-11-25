@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Populates a listmonk database with random dummy data."""
+"""Populates a AELIG Mail database with random dummy data."""
 
 import argparse
 import json
@@ -32,7 +32,7 @@ MAX_ROLE_LISTS = 5
 ACTIVITY_DAYS = 90
 
 ADMIN_USER = "admin"
-ADMIN_PASSWORD = "listmonk"
+ADMIN_PASSWORD = "aelig-mail"
 
 # Local mailhog (or equivalent) that outgoing e-mails are pointed at.
 SMTP = {"name": "mailhog", "enabled": True, "host": "localhost", "port": 1025,
@@ -97,9 +97,9 @@ def rand_time(now):
 
 def connect(dsn):
     u = urlparse(dsn)
-    return pg8000.dbapi.connect(user=u.username or "listmonk", password=u.password,
+    return pg8000.dbapi.connect(user=u.username or "aelig_mail", password=u.password,
                                 host=u.hostname or "localhost", port=u.port or 5432,
-                                database=u.path.lstrip("/") or "listmonk")
+                                database=u.path.lstrip("/") or "aelig_mail")
 
 
 def insert(cur, sql, rows, fetch=False, chunk=1000):
@@ -115,8 +115,8 @@ def insert(cur, sql, rows, fetch=False, chunk=1000):
 
 
 def main():
-    p = argparse.ArgumentParser(description="Populate a listmonk DB with dummy data.")
-    p.add_argument("--db", default="postgres://listmonk:listmonk@localhost:5432/listmonk?sslmode=disable", help="Postgres DSN")
+    p = argparse.ArgumentParser(description="Populate a AELIG Mail DB with dummy data.")
+    p.add_argument("--db", default="postgres://aelig_mail:change-me@localhost:5432/aelig_mail?sslmode=disable", help="Postgres DSN")
     args = p.parse_args()
 
     now = datetime.now(timezone.utc)

@@ -1,4 +1,3 @@
-# Docker dev environment
+# Development environment
 
-See https://listmonk.app/docs/developer-setup/
-
+See the local [developer setup guide](../docs/docs/content/developer-setup.md) for prerequisites and commands.

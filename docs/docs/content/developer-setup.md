@@ -1,18 +1,18 @@
 # Developer setup
-The app is a Go backend that server-renders the admin UI (HTML templates with JS, built with [bun](https://bun.sh)). 
+The app is a Go backend that server-renders the admin UI (HTML templates with JS, built with [bun](https://bun.sh)).
 
 
 ### Pre-requisites
 - `go`
 - `bun` (if you are working on the admin frontend)
-- Postgres database. If there is no local installation, the demo docker DB can be used for development (`docker compose up demo-db`)
+- Postgres database, locally installed or through the supplied Docker development environment.
 
 
 ### First time setup
-`git clone https://github.com/knadh/listmonk.git`. The project uses go.mod, so it's best to clone it outside the Go src path.
+Clone the AELIG Mail source repository into a directory outside the Go `src` path. The project uses Go modules.
 
 1. Copy `config.toml.sample` as `config.toml` and add your config.
-2. Build the frontend and the binary: `make dist` (builds the SSR admin and the Go binary, embedding the assets). Once the binary is built, run `./listmonk --install` to run the DB setup. For subsequent dev runs, use `make run`.
+2. Build the frontend and the binary: `make dist` (builds the SSR admin and the Go binary, embedding the assets). Once the binary is built, run `./aelig-mail --install` to run the DB setup. For subsequent dev runs, use `make run`.
 
 > [mailhog](https://github.com/mailhog/MailHog) is an excellent standalone mock SMTP server (with a UI) for testing and dev.
 
@@ -21,7 +21,7 @@ The app is a Go backend that server-renders the admin UI (HTML templates with JS
 
 - Run `make build-dev-docker` once to build the dev container which bundles Go, Postgres, Bun etc.
 - Run `make run-dev-docker` to start it and enter its shell.
-- Inside the shell, run `make run` which builds static assets, initializes a fresh DB, and starts listmonk on `:9000`.
+- Inside the shell, run `make run` which builds static assets, initializes a fresh DB, and starts AELIG Mail on `:9000`.
 - For subsequent changes, simply Ctrl-C and re-run `make run` for changes to Go and static files to be picked up.
 
 
@@ -29,7 +29,7 @@ Run `make stop-dev-docker` to stop the container and `make rm-dev-docker` to com
 
 ### Frontend tests
 
-listmonk maintains a Playwright suite in `tests/` for end-to-end testing the admin UI. It runs in the Docker dev environment that bundles all the necessary dependencies (Postgres, Mailhog, Bug etc.).
+AELIG Mail maintains a Playwright suite in `tests/` for end-to-end testing the admin UI. It runs in the Docker development environment, which bundles Postgres, MailHog, and Bun.
 
 #### Running
 
@@ -47,4 +47,4 @@ bun run test
 ```
 
 # Production build
-Run `make dist` to build the SSR admin frontend and the Go binary, embedding the static assets into a single self-contained binary, `listmonk`.
+Run `make dist` to build the SSR admin frontend and the Go binary, embedding the static assets into the self-contained `aelig-mail` executable.

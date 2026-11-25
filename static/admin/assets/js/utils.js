@@ -9,7 +9,7 @@ const htmlEntities = {
   '=': '&#x3D;',
 };
 
-const prefKey = 'listmonk_pref';
+const prefKey = 'aelig_mail_pref';
 
 let i18n = {
   t: (key) => key,

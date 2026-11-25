@@ -9,16 +9,16 @@ address = "localhost:9000"
 [db]
 host = "localhost"
 port = 5432
-user = "listmonk"
-password = "listmonk"
+user = "aelig_mail"
+password = "change-me"
 
 # Ensure that this database has been created in Postgres.
-database = "listmonk"
+database = "aelig_mail"
 
 ssl_mode = "disable"
 max_open = 25
 max_idle = 25
 max_lifetime = "300s"
 
-# Optional space separated Postgres DSN params. eg: "application_name=listmonk gssencmode=disable"
+# Optional space separated Postgres DSN params. eg: "application_name=aelig-mail gssencmode=disable"
 params = ""

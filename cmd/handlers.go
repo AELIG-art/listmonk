@@ -287,7 +287,7 @@ func initHTTPHandlers(e *echo.Echo, a *App) {
 
 		// Landing page.
 		g.GET("/", func(c *echo.Context) error {
-			return c.Render(http.StatusOK, "home", publicTpl{Title: "listmonk"})
+			return c.Render(http.StatusOK, "home", publicTpl{Title: "AELIG Mail"})
 		})
 
 		// Public admin endpoints (login page, OIDC endpoints, password reset).
@@ -424,7 +424,7 @@ func (a *App) hasSignedURL(next echo.HandlerFunc) echo.HandlerFunc {
 		c.Response().Header().Set("Referrer-Policy", "no-referrer")
 		c.Response().Header().Set("Cache-Control", "no-store")
 
-		// Signatures cover listmonk's canonical paths without the root URL prefix.
+		// Signatures cover the application's canonical paths without the root URL prefix.
 		expiry, ok := a.urlCfg.Signer.Verify(c.Request().URL)
 		if !ok {
 			return c.Render(http.StatusForbidden, tplMessage,

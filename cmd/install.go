@@ -18,13 +18,20 @@ import (
 )
 
 // install runs the first time setup of setting up the database.
+func envWithLegacy(name, legacy string) string {
+	if value := os.Getenv(name); value != "" {
+		return value
+	}
+	return os.Getenv(legacy)
+}
+
 func install(lastVer string, db *sqlx.DB, fs stuffbin.FileSystem, prompt, idempotent bool) {
 	qMap := readQueries(queryFilePath, fs)
 
 	fmt.Println("")
 	if !idempotent {
 		fmt.Println("** first time installation **")
-		fmt.Printf("** IMPORTANT: This will wipe existing listmonk tables and types in the DB '%s' **",
+		fmt.Printf("** IMPORTANT: This will wipe existing AELIG Mail tables and types in the DB '%s' **",
 			ko.String("db.database"))
 	} else {
 		fmt.Println("** first time (idempotent) installation **")
@@ -79,9 +86,9 @@ func install(lastVer string, db *sqlx.DB, fs stuffbin.FileSystem, prompt, idempo
 
 	// Setup admin user optionally.
 	var (
-		user     = os.Getenv("LISTMONK_ADMIN_USER")
-		password = os.Getenv("LISTMONK_ADMIN_PASSWORD")
-		apiUser  = os.Getenv("LISTMONK_ADMIN_API_USER")
+		user     = envWithLegacy("AELIG_MAIL_ADMIN_USER", "LISTMONK_ADMIN_USER")
+		password = envWithLegacy("AELIG_MAIL_ADMIN_PASSWORD", "LISTMONK_ADMIN_PASSWORD")
+		apiUser  = envWithLegacy("AELIG_MAIL_ADMIN_API_USER", "LISTMONK_ADMIN_API_USER")
 
 		hasUser = false
 	)
@@ -89,7 +96,7 @@ func install(lastVer string, db *sqlx.DB, fs stuffbin.FileSystem, prompt, idempo
 	// Admin user.
 	if user != "" && password != "" {
 		if len(user) < 3 || len(password) < 8 {
-			lo.Fatal("LISTMONK_ADMIN_USER should be min 3 chars and LISTMONK_ADMIN_PASSWORD should be min 8 chars")
+			lo.Fatal("AELIG_MAIL_ADMIN_USER should be min 3 chars and AELIG_MAIL_ADMIN_PASSWORD should be min 8 chars")
 		}
 
 		lo.Printf("creating superadmin user '%s'", user)
@@ -101,11 +108,11 @@ func install(lastVer string, db *sqlx.DB, fs stuffbin.FileSystem, prompt, idempo
 	// API User.
 	if apiUser != "" {
 		if !hasUser {
-			lo.Fatal("LISTMONK_ADMIN_API_USER requires LISTMONK_ADMIN_USER and LISTMONK_ADMIN_PASSWORD to be set")
+			lo.Fatal("AELIG_MAIL_ADMIN_API_USER requires AELIG_MAIL_ADMIN_USER and AELIG_MAIL_ADMIN_PASSWORD to be set")
 		}
 
 		if len(apiUser) < 3 {
-			lo.Fatal("LISTMONK_ADMIN_API_USER should be min 3 chars")
+			lo.Fatal("AELIG_MAIL_ADMIN_API_USER should be min 3 chars")
 		}
 
 		lo.Printf("creating superadmin API user '%s'", apiUser)
@@ -253,15 +260,15 @@ func installCampaign(campTplID, archiveTplID int, q *models.Queries) {
 	if _, err := q.CreateCampaign.Exec(uuid.Must(uuid.NewV4()),
 		models.CampaignTypeRegular,
 		"Test campaign",
-		"Welcome to listmonk",
+		"Welcome to AELIG Mail",
 		"No Reply <noreply@yoursite.com>",
 		`<h3>Hi {{ .Subscriber.FirstName }}!</h3>
 		<p>This is a test e-mail campaign. Your second name is {{ .Subscriber.LastName }} and you are from {{ .Subscriber.Attribs.city }}.</p>
-		<p>Here is a <a href="https://listmonk.app@TrackLink">tracked link</a>.</p>
+		<p>Here is a <a href="https://example.com@TrackLink">tracked link</a>.</p>
 		<p>Use the link icon in the editor toolbar or when writing raw HTML or Markdown,
 			simply suffix @TrackLink to the end of a URL to turn it into a tracking link. Example:</p>
-		<pre>&lt;a href=&quot;https:/&zwnj;/listmonk.app&#064;TrackLink&quot;&gt;&lt;/a&gt;</pre>
-		<p>For help, refer to the <a href="https://listmonk.app/docs">documentation</a>.</p>
+		<pre>&lt;a href=&quot;https:/&zwnj;/example.com&#064;TrackLink&quot;&gt;&lt;/a&gt;</pre>
+		<p>For help, refer to the <a href="https://example.com/docs">documentation</a>.</p>
 		`,
 		nil,
 		"richtext",
@@ -273,7 +280,7 @@ func installCampaign(campTplID, archiveTplID int, q *models.Queries) {
 		campTplID,
 		pq.Int64Array{1},
 		false,
-		"welcome-to-listmonk",
+		"welcome-to-aelig-mail",
 		archiveTplID,
 		`{"name": "Subscriber"}`,
 		nil,
@@ -336,7 +343,7 @@ func installUser(username, password, apiUsername string, q *models.Queries) {
 	}
 
 	// Create the admin user.
-	if _, err := q.CreateUser.Exec(username, true, password, username+"@listmonk", username, auth.RoleTypeUser, role.ID, nil, auth.UserStatusEnabled); err != nil {
+	if _, err := q.CreateUser.Exec(username, true, password, username+"@example.com", username, auth.RoleTypeUser, role.ID, nil, auth.UserStatusEnabled); err != nil {
 		lo.Fatalf("error creating superadmin user: %v", err)
 	}
 
@@ -358,7 +365,7 @@ func installUser(username, password, apiUsername string, q *models.Queries) {
 		}
 
 		// Print the token to stdout so that it can be grepped out.
-		lo.Println("writing API token LISTMONK_ADMIN_API_TOKEN to stderr")
-		fmt.Fprintf(os.Stderr, "export LISTMONK_ADMIN_API_TOKEN=\"%s\"\n", tk)
+		lo.Println("writing API token AELIG_MAIL_ADMIN_API_TOKEN to stderr")
+		fmt.Fprintf(os.Stderr, "export AELIG_MAIL_ADMIN_API_TOKEN=\"%s\"\n", tk)
 	}
 }

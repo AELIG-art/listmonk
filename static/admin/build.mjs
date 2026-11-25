@@ -1,4 +1,4 @@
-// Build pipeline for the listmonk SSR admin frontend (Bun).
+// Build pipeline for the AELIG Mail SSR admin frontend (Bun).
 // Output (dist/) is stuffed into the Go binary and served at /admin/static/*.
 // Run: `bun run build` (one-shot) or `bun run watch` (rebuild on change).
 

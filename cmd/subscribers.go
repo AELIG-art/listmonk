@@ -65,7 +65,7 @@ type subOptin struct {
 
 var (
 	dummySubscriber = models.Subscriber{
-		Email:   "demo@listmonk.app",
+		Email:   "demo@example.com",
 		Name:    "Demo Subscriber",
 		UUID:    dummyUUID,
 		Attribs: models.JSON{"city": "Bengaluru"},

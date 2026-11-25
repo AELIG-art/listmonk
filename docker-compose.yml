@@ -1,70 +1,70 @@
-# All LISTMONK_* env variables also support the LISTMONK_*_FILE pattern for loading secrets from files with Docker secrets and Podman
-# eg: LISTMONK_ADMIN_USER -> LISTMONK_ADMIN_USER_FILE=/path/to/file_with_value
+# All AELIG_MAIL_* env variables also support the AELIG_MAIL_*_FILE pattern for loading secrets from files with Docker secrets and Podman
+# eg: AELIG_MAIL_ADMIN_USER -> AELIG_MAIL_ADMIN_USER_FILE=/path/to/file_with_value
 
-x-db-credentials: &db-credentials                             # Use the default POSTGRES_ credentials if they're available or simply default to "listmonk"
-  POSTGRES_USER: &db-user listmonk                            # for database user, password, and database name
-  POSTGRES_PASSWORD: &db-password listmonk
-  POSTGRES_DB: &db-name listmonk
+x-db-credentials: &db-credentials                             # Use the default POSTGRES_ credentials if they're available or simply default to "aelig_mail"
+  POSTGRES_USER: &db-user aelig_mail                            # for database user, password, and database name
+  POSTGRES_PASSWORD: &db-password aelig_mail
+  POSTGRES_DB: &db-name aelig_mail
 
 services:
-  # listmonk app
+  # aelig-mail app
   app:
-    image: listmonk/listmonk:latest
-    container_name: listmonk_app
+    image: aelig-mail:latest
+    container_name: aelig-mail_app
     restart: unless-stopped
     ports:
       - "9000:9000"                                           # To change the externally exposed port, change to: $custom_port:9000
     networks:
-      - listmonk
-    hostname: listmonk.example.com                            # Recommend using FQDN for hostname
+      - aelig-mail
+    hostname: aelig-mail.example.com                            # Recommend using FQDN for hostname
     depends_on:
       - db
-    command: [sh, -c, "./listmonk --install --idempotent --yes --config '' && ./listmonk --upgrade --yes --config '' && ./listmonk --config ''"]
-                                                              # --config (file) param is set to empty so that listmonk only uses the env vars (below) for config.
+    command: [sh, -c, "./aelig-mail --install --idempotent --yes --config '' && ./aelig-mail --upgrade --yes --config '' && ./aelig-mail --config ''"]
+                                                              # --config (file) param is set to empty so that aelig-mail only uses the env vars (below) for config.
                                                               # --install --idempotent ensures that DB installation happens only once on an empty DB, on the first ever start.
-                                                              # --upgrade automatically runs any DB migrations when a new image is pulled.
+                                                              # --upgrade automatically runs any DB migrations when a new image is built.
 
     environment:                                              # The same params as in config.toml are passed as env vars here.
-      LISTMONK_app__address: 0.0.0.0:9000
-      LISTMONK_db__user: *db-user
-      LISTMONK_db__password: *db-password
-      LISTMONK_db__database: *db-name
-      LISTMONK_db__host: db
-      LISTMONK_db__port: 5432
-      LISTMONK_db__ssl_mode: disable
-      LISTMONK_db__max_open: 25
-      LISTMONK_db__max_idle: 25
-      LISTMONK_db__max_lifetime: 300s
+      AELIG_MAIL_app__address: 0.0.0.0:9000
+      AELIG_MAIL_db__user: *db-user
+      AELIG_MAIL_db__password: *db-password
+      AELIG_MAIL_db__database: *db-name
+      AELIG_MAIL_db__host: db
+      AELIG_MAIL_db__port: 5432
+      AELIG_MAIL_db__ssl_mode: disable
+      AELIG_MAIL_db__max_open: 25
+      AELIG_MAIL_db__max_idle: 25
+      AELIG_MAIL_db__max_lifetime: 300s
       TZ: Etc/UTC
-      LISTMONK_ADMIN_USER: ${LISTMONK_ADMIN_USER:-}           # If these (optional) are set during the first `docker compose up`, then the Super Admin user is automatically created.
-      LISTMONK_ADMIN_PASSWORD: ${LISTMONK_ADMIN_PASSWORD:-}   # Otherwise, the user can be setup on the web app after the first visit to http://localhost:9000
+      AELIG_MAIL_ADMIN_USER: ${AELIG_MAIL_ADMIN_USER:-}           # If these (optional) are set during the first `docker compose up`, then the Super Admin user is automatically created.
+      AELIG_MAIL_ADMIN_PASSWORD: ${AELIG_MAIL_ADMIN_PASSWORD:-}   # Otherwise, the user can be setup on the web app after the first visit to http://localhost:9000
     volumes:
-      - ./uploads:/listmonk/uploads:rw                        # Mount an uploads directory on the host to /listmonk/uploads inside the container.
-                                                              # To use this, change directory path in Admin -> Settings -> Media to /listmonk/uploads
+      - ./uploads:/aelig-mail/uploads:rw                        # Mount an uploads directory on the host to /aelig-mail/uploads inside the container.
+                                                              # To use this, change directory path in Admin -> Settings -> Media to /aelig-mail/uploads
 
   # Postgres database
   db:
     image: postgres:17-alpine
-    container_name: listmonk_db
+    container_name: aelig-mail_db
     restart: unless-stopped
     ports:
       - "127.0.0.1:5432:5432"                                 # Only bind on the local interface. To connect to Postgres externally, change this to 0.0.0.0
     networks:
-      - listmonk
+      - aelig-mail
     environment:
       <<: *db-credentials
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U listmonk"]
+      test: ["CMD-SHELL", "pg_isready -U aelig_mail"]
       interval: 10s
       timeout: 5s
       retries: 6
     volumes:
       - type: volume
-        source: listmonk-data
+        source: aelig-mail-data
         target: /var/lib/postgresql/data
 
 networks:
-  listmonk:
+  aelig-mail:
 
 volumes:
-  listmonk-data:
+  aelig-mail-data:

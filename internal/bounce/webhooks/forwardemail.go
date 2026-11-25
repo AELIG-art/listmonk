@@ -84,8 +84,9 @@ func (p *Forwardemail) ProcessBounce(sigHex string, body []byte) ([]models.Bounc
 	}
 
 	campUUID := ""
-	if v, ok := n.Headers["X-Listmonk-Campaign"]; ok {
-		campUUID = v
+	campUUID = n.Headers[models.EmailHeaderCampaignUUID]
+	if campUUID == "" {
+		campUUID = n.Headers["X-Listmonk-Campaign"]
 	}
 
 	return []models.Bounce{{

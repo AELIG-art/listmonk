@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "listmonk-tests",
+      "name": "aelig-mail-tests",
       "devDependencies": {
         "@playwright/test": "^1.49.0",
       },

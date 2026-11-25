@@ -3,7 +3,7 @@
   "configVersion": 1,
   "workspaces": {
     "": {
-      "name": "listmonk-admin",
+      "name": "aelig-mail-admin",
       "dependencies": {
         "@codemirror/commands": "^6.10.4",
         "@codemirror/lang-css": "^6.3.1",

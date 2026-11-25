@@ -121,7 +121,6 @@
 			<label data-field data-keywords="bounce webhook notifications endpoint enable">
 				<input type="checkbox" role="switch" x-model="form['bounce.webhooks_enabled']" />
 				{{ $.L.T "settings.bounces.enableWebhooks" }}
-				<small data-hint><a href="https://listmonk.app/docs/bounces" target="_blank" rel="noopener noreferrer">{{ $.L.T "globals.buttons.learnMore" }} &rarr;</a></small>
 			</label>
 
 			<template x-if="form['bounce.webhooks_enabled']">

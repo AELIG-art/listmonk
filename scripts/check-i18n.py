@@ -97,7 +97,7 @@ def main():
         if not name.startswith(('cmd/', 'internal/', 'static/')):
             continue
 
-        # Third-party bundles are not listmonk translation consumers.
+        # Third-party bundles are not AELIG Mail translation consumers.
         if '/assets/static/' in name or '/vendor/' in name:
             continue
 

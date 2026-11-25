@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Genel sayfalara uygulanacak özel CSS ve JavaScript.",
     "settings.bounces.azureSharedSecret": "Azure Event Grid Paylaşılan Sırrı",
     "settings.bounces.azureSharedSecretHeader": "Azure Paylaşılan Sır Başlığı Adı",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Azure paylaşılan sırrını okumak için isteğe bağlı HTTP başlık adı. Boşsa, AELIG Mail X-Listmonk-Webhook-Secret kullanır.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Azure paylaşılan sırrını okumak için isteğe bağlı HTTP başlık adı. Boşsa, AELIG Mail X-AELIG-Mail-Webhook-Secret kullanır.",
     "settings.bounces.azureSharedSecretHelp": "Azure Event Grid webhook uç noktanız için yapılandırılan paylaşılan sırrı sağlayın.",
     "settings.bounces.count": "Sıçrama sayısı",
     "settings.bounces.countHelp": "Abone başına geri dönüş sayısı",

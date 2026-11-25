@@ -3,22 +3,22 @@
 ### TOML Configuration file
 One or more TOML files can be read by passing `--config config.toml` multiple times. Apart from a few low level configuration variables and the database configuration, all other settings can be managed from the `Settings` dashboard on the admin UI.
 
-To generate a new sample configuration file, run `listmonk --new-config`
+To generate a new sample configuration file, run `./aelig-mail --new-config`
 
 ### Environment variables
-Variables defined in config.toml can also be provided as environment variables prefixed by `LISTMONK_` with periods replaced by `__` (double underscore). To start listmonk purely with environment variables without a configuration file, set the environment variables and pass the config flag as `--config=""`.
+Variables defined in config.toml can also be provided as environment variables prefixed by `AELIG_MAIL_` with periods replaced by `__` (double underscore). To start AELIG Mail purely with environment variables without a configuration file, set the environment variables and pass the config flag as `--config=""`.
 
 Supported variables:
 
 | **Environment variable**       | Example value  |
 | ------------------------------ | -------------- |
-| `LISTMONK_app__address`        | "0.0.0.0:9000" |
-| `LISTMONK_db__host`            | db             |
-| `LISTMONK_db__port`            | 9432           |
-| `LISTMONK_db__user`            | listmonk       |
-| `LISTMONK_db__password`        | listmonk       |
-| `LISTMONK_db__database`        | listmonk       |
-| `LISTMONK_db__ssl_mode`        | disable        |
+| `AELIG_MAIL_app__address`        | "0.0.0.0:9000" |
+| `AELIG_MAIL_db__host`            | db             |
+| `AELIG_MAIL_db__port`            | 5432           |
+| `AELIG_MAIL_db__user`            | postgres       |
+| `AELIG_MAIL_db__password`        | change-me        |
+| `AELIG_MAIL_db__database`        | aelig_mail       |
+| `AELIG_MAIL_db__ssl_mode`        | disable        |
 
 
 ### Customizing system templates
@@ -53,7 +53,7 @@ When configuring auth proxies and web application firewalls, use this table.
 ### Signed subscriber links
 
 With `security.signed_links.enabled` enabled, unsubscribe, preference, opt-in,
-privacy export/deletion, and hosted message URLs require a signature. listmonk generates these links automatically. The signature
+privacy export/deletion, and hosted message URLs require a signature. AELIG Mail generates these links automatically. The signature
 covers the URL path and the `exp`, `l` (opt-in list IDs), `manage`, and `auth` query parameters.
 Unrelated query parameters, such as UTM tracking tags, can be added, changed, or removed.
 Public signup forms and
@@ -89,9 +89,9 @@ opening preference pages or hosted messages. Changing the TTL affects new emails
 only. With signing enabled, links without a signed expiry are rejected.
 
 #### Secret key
-listmonk generates and stores a secret key in the settings table (`internal.secret_key`) when it's first setup. This secret is used to sign links.
+AELIG Mail generates and stores a secret key in the settings table (`internal.secret_key`) when it's first setup. This secret is used to sign links.
 
-To rotate the key, run the following SQL and restart listmonk. This invalidates all previously sent signed links.
+To rotate the key, run the following SQL and restart AELIG Mail. This invalidates all previously sent signed links.
 ```sql
 UPDATE settings SET value = TO_JSONB(ENCODE(GEN_RANDOM_BYTES(32), 'hex')) WHERE key = 'internal.secret_key';
 ```
@@ -102,11 +102,11 @@ UPDATE settings SET value = TO_JSONB(ENCODE(GEN_RANDOM_BYTES(32), 'hex')) WHERE 
 
 #### Using filesystem
 
-When configuring `docker` volume mounts for using filesystem media uploads, you can follow either of two approaches. [The second option may be necessary if](https://github.com/knadh/listmonk/issues/1169#issuecomment-1674475945) your setup requires you to use `sudo` for docker commands. 
+When configuring `docker` volume mounts for using filesystem media uploads, you can follow either of two approaches. The second option may be necessary if your setup requires you to use `sudo` for docker commands.
 
-After making any changes you will need to run `sudo docker compose stop ; sudo docker compose up`. 
+After making any changes you will need to run `sudo docker compose stop ; sudo docker compose up`.
 
-And under `https://listmonk.mysite.com/admin/settings` you put `/listmonk/uploads`. 
+In Admin → Settings → Media, set the upload path to match the container mount, for example the upload path configured in your container.
 
 #### Using volumes
 
@@ -117,16 +117,16 @@ Using `docker volumes`, you can specify the name of volume and destination for t
 app:
     volumes:
       - type: volume
-        source: listmonk-uploads
-        target: /listmonk/uploads
+        source: aelig-mail-uploads
+        target: /aelig-mail/uploads
 
 volumes:
-  listmonk-uploads:
+  aelig-mail-uploads:
 ```
 
 !!! note
 
-    This volume is managed by `docker` itself, and you can see find the host path with `docker volume inspect listmonk_listmonk-uploads`.
+    This volume is managed by Docker. Use `docker volume inspect <compose-project>_aelig-mail-uploads` to find its host path.
 
 #### Using bind mounts
 
@@ -139,7 +139,7 @@ Eg:
 ```yml
   app:
     volumes:
-      - ./data/uploads:/listmonk/uploads
+      - ./data/uploads:/aelig-mail/uploads
 ```
 The files will be available inside `/data/uploads` directory on the host machine.
 
@@ -147,7 +147,7 @@ To use the default `uploads` folder:
 ```yml
   app:
     volumes:
-      - ./uploads:/listmonk/uploads
+      - ./uploads:/aelig-mail/uploads
 ```
 
 ## Logs
@@ -157,26 +157,26 @@ To use the default `uploads` folder:
 https://docs.docker.com/engine/reference/commandline/logs/
 ```
 sudo docker logs -f
-sudo docker logs listmonk_app -t
-sudo docker logs listmonk_db -t
+sudo docker logs aelig-mail_app -t
+sudo docker logs aelig-mail_db -t
 sudo docker logs --help
 ```
-Container info: `sudo docker inspect listmonk_listmonk`
+Container info: `sudo docker inspect aelig-mail_app`
 
 Docker logs to `/dev/stdout` and `/dev/stderr`. The logs are collected by the docker daemon and stored in your node's host path (by default). The same can be configured (/etc/docker/daemon.json) in your docker daemon settings to setup other logging drivers, logrotate policy and more, which you can read about [here](https://docs.docker.com/config/containers/logging/configure/).
 
 ### Binary
 
-listmonk logs to `stdout`, which is usually not saved to any file. To save listmonk logs to a file use `./listmonk > listmonk.log`.
+AELIG Mail logs to `stdout`, which is usually not saved to any file. To save AELIG Mail logs to a file use `./aelig-mail > aelig-mail.log`.
 
-Settings -> Logs in admin shows the last 1000 lines of the standard log output but gets erased when listmonk is restarted.
+Settings -> Logs in admin shows the last 1000 lines of the standard log output but gets erased when AELIG Mail is restarted.
 
-For the [service file](https://github.com/knadh/listmonk/blob/master/listmonk%40.service), you can use `ExecStart=/bin/bash -ce "exec /usr/bin/listmonk --config /etc/listmonk/config.toml --static-dir /etc/listmonk/static >>/etc/listmonk/listmonk.log 2>&1"` to create a log file that persists after restarts. [More info](https://github.com/knadh/listmonk/issues/1462#issuecomment-1868501606).
+For persistent file logging, redirect the service command output to a log file in its `ExecStart` command.
 
 
 ## Time zone
 
-To change listmonk's time zone (logs, etc.) edit `docker-compose.yml`:
+To change AELIG Mail's time zone (logs, etc.) edit `docker-compose.yml`:
 ```
 environment:
     - TZ=Etc/UTC
@@ -192,7 +192,7 @@ The `Settings -> SMTP -> Retries` denotes the number of times a message that fai
 Some server hosts block outgoing SMTP ports (25, 465). You may have to contact your host to unblock them before being able to send e-mails. Eg: [Hetzner](https://docs.hetzner.com/cloud/servers/faq/#why-can-i-not-send-any-mails-from-my-server).
 
 ## HELO hostname
-By default, listmonk will auto-generate a hostname and advertise that to the SMTP server. Certain hosts such as Google Workspace SMTP and relay require it to be set to an valid hostname (FQDN).
+By default, AELIG Mail will auto-generate a hostname and advertise that to the SMTP server. Certain hosts such as Google Workspace SMTP and relay require it to be set to an valid hostname (FQDN).
 
 
 ## Performance

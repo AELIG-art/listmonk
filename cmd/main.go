@@ -129,19 +129,18 @@ func init() {
 	initConfigFiles(ko.Strings("config"), ko)
 
 	// Load environment variables and merge into the loaded config.
-	// LISTMONK_foo__bar -> foo.bar (double underscore becomes dot for nested config)
-	// LISTMONK_static_dir -> static-dir (top-level keys with underscore become hyphen for CLI flags)
-	if err := ko.Load(env.Provider("LISTMONK_", ".", func(s string) string {
-		key := strings.ToLower(strings.TrimPrefix(s, "LISTMONK_"))
-		key = strings.Replace(key, "__", ".", -1)
-		// Only convert underscore to hyphen for top-level keys (CLI flags like static-dir, i18n-dir)
-		// Nested config keys (containing dots) keep underscores (e.g., db.ssl_mode)
-		if !strings.Contains(key, ".") {
-			key = strings.Replace(key, "_", "-", -1)
+	// Load legacy variables first so AELIG_MAIL_* values take precedence when both are set.
+	for _, prefix := range []string{"LISTMONK_", "AELIG_MAIL_"} {
+		if err := ko.Load(env.Provider(prefix, ".", func(s string) string {
+			key := strings.ToLower(strings.TrimPrefix(s, prefix))
+			key = strings.Replace(key, "__", ".", -1)
+			if !strings.Contains(key, ".") {
+				key = strings.Replace(key, "_", "-", -1)
+			}
+			return key
+		}), nil); err != nil {
+			lo.Fatalf("error loading config from env: %v", err)
 		}
-		return key
-	}), nil); err != nil {
-		lo.Fatalf("error loading config from env: %v", err)
 	}
 
 	// Connect to the database.
@@ -203,7 +202,11 @@ func init() {
 
 	// The public URL can be supplied by the deployment environment, overriding
 	// the value stored in settings. Other database settings retain precedence.
-	if rootURL := strings.TrimSpace(os.Getenv("LISTMONK_app__root_url")); rootURL != "" {
+	rootURLEnv := os.Getenv("AELIG_MAIL_app__root_url")
+	if rootURLEnv == "" {
+		rootURLEnv = os.Getenv("LISTMONK_app__root_url")
+	}
+	if rootURL := strings.TrimSpace(rootURLEnv); rootURL != "" {
 		if err := ko.Set("app.root_url", rootURL); err != nil {
 			lo.Fatalf("error setting root URL from environment: %v", err)
 		}

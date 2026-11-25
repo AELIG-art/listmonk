@@ -9,11 +9,11 @@
 
 :{$PORT} {
 	@cors {
-		header Origin "{$LISTMONK_ORIGIN_0:disabled}"
-		header Origin "{$LISTMONK_ORIGIN_1:disabled}"
-		header Origin "{$LISTMONK_ORIGIN_2:disabled}"
-		header Origin "{$LISTMONK_ORIGIN_3:disabled}"
-		header Origin "{$LISTMONK_ORIGIN_4:disabled}"
+		header Origin "{$AELIG_MAIL_ORIGIN_0:disabled}"
+		header Origin "{$AELIG_MAIL_ORIGIN_1:disabled}"
+		header Origin "{$AELIG_MAIL_ORIGIN_2:disabled}"
+		header Origin "{$AELIG_MAIL_ORIGIN_3:disabled}"
+		header Origin "{$AELIG_MAIL_ORIGIN_4:disabled}"
 	}
 	@preflight {
 		method OPTIONS
@@ -37,7 +37,7 @@
 		respond @preflight 204
 	}
 
-	reverse_proxy {$LISTMONK_app__address} {
+	reverse_proxy {$AELIG_MAIL_app__address} {
 		header_down Content-Security-Policy "upgrade-insecure-requests"
 	}
 }

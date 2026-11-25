@@ -1,9 +1,9 @@
-site_name: listmonk / Documentation
+site_name: AELIG Mail Documentation
 theme:
   name: material
   # custom_dir: "mkdocs-material/material"
-  logo: "images/favicon.png"
-  favicon: "images/favicon.png"
+  logo: "images/logo.svg"
+  favicon: "images/logo.svg"
   language: "en"
   font:
     text: 'Inter'
@@ -44,7 +44,7 @@ nav:
     - "Installation": installation.md
     - "Configuration": configuration.md
     - "Upgrade": upgrade.md
-  - "Using listmonk":
+  - "Using AELIG Mail":
     - "Concepts": concepts.md
     - "Templating": templating.md
     - "Querying and segmenting subscribers": querying-and-segmentation.md

@@ -55,12 +55,10 @@
 												<input type="checkbox" value="{{ . }}" x-model="form.permissions" :disabled="disabled" />
 												{{- if eq . "subscribers:sql_query" }}
 													<span class="text-danger">{{ . }}</span>
-													<a href="https://listmonk.app/docs/roles-and-permissions/#subscriberssql_query" target="_blank" rel="noopener noreferrer" class="text-danger" aria-label="Warning: high risk permission">
 														{{ Icon "alert-triangle" }}
 													</a>
 												{{- else if eq . "users:manage" }}
 													<span class="text-danger">{{ . }}</span>
-													<a href="https://listmonk.app/docs/roles-and-permissions/#:~:text=users:manage" target="_blank" rel="noopener noreferrer" class="text-danger" aria-label="Warning: high risk permission">
 														{{ Icon "alert-triangle" }}
 													</a>
 												{{ else }}
@@ -83,7 +81,6 @@
 							<strong>{{ .L.T "globals.fields.id" }}</strong> <span x-text="form.id"></span>
 						</button>
 					{{- end }}
-					<a href="https://listmonk.app/docs/roles-and-permissions" target="_blank" rel="noopener noreferrer" class="text-light text-8">
 						{{ Icon "link-2" }} {{ .L.T "globals.buttons.learnMore" }}
 					</a>
 				</div>

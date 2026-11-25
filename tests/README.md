@@ -1,12 +1,12 @@
-# listmonk E2E tests
+# AELIG Mail E2E tests
 
 Playwright tests for the server-rendered admin UI. See
 [Frontend tests](../docs/docs/content/developer-setup.md#frontend-tests) for the
 Docker dev workflow, local prerequisites, and configuration options.
 
 The suite **wipes and reinstalls the configured database schema** and stops
-running listmonk processes. Use disposable data; in the Docker dev environment,
-this is the `listmonk-dev` database.
+running AELIG Mail processes. Use disposable data; in the Docker dev environment,
+this is the `AELIG Mail-dev` database.
 
 From the repository root on the host:
 
@@ -35,7 +35,7 @@ From `tests/`, use `bun run test` for headless tests or `bun run test:ui` for th
 interactive UI.
 
 The rich-text editor regression tests can also run directly against local
-frontend source, without starting listmonk or touching a database. From `tests/`:
+frontend source, without starting AELIG Mail or touching a database. From `tests/`:
 
 ```sh
 bun playwright test --config playwright.richtext.config.js richtext.spec.js

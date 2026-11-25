@@ -43,7 +43,7 @@ function component(lists = []) {
       const sub = config.public_subscription || {};
       const root = config.root_url || '';
 
-      let h = `<form method="post" action="${root}/subscription/form" class="listmonk-form">\n`
+      let h = `<form method="post" action="${root}/subscription/form" class="aelig-mail-form">\n`
         + '  <div>\n'
         + `    <h3>${i18n.t('globals.buttons.subscribe')}</h3>\n`
         + '    <input type="hidden" name="nonce" />\n';

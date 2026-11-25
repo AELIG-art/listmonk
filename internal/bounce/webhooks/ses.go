@@ -162,7 +162,7 @@ func (s *SES) ProcessBounce(b []byte) (models.Bounce, error) {
 	if !m.Mail.HeadersTruncated {
 		for _, h := range m.Mail.Headers {
 			key, ok := h["name"]
-			if !ok || key != models.EmailHeaderCampaignUUID {
+			if !ok || (key != models.EmailHeaderCampaignUUID && key != "X-Listmonk-Campaign") {
 				continue
 			}
 

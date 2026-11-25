@@ -19,22 +19,22 @@ COPY i18n ./i18n
 COPY static ./static
 COPY scripts/build-icons.py ./scripts/build-icons.py
 
+ARG AELIG_MAIL_VERSION
 ARG LISTMONK_VERSION=v0.0.0
 ARG RAILWAY_GIT_COMMIT_SHA=unknown
-RUN make dist VERSION="$LISTMONK_VERSION" LAST_COMMIT="$RAILWAY_GIT_COMMIT_SHA"
+RUN make dist VERSION="${AELIG_MAIL_VERSION:-$LISTMONK_VERSION}" LAST_COMMIT="$RAILWAY_GIT_COMMIT_SHA"
 
 FROM alpine:3.23
 RUN apk add --no-cache bash ca-certificates postgresql-client shadow su-exec tini tzdata
 
-WORKDIR /listmonk
-COPY --from=build /src/listmonk ./listmonk
+WORKDIR /aelig-mail
+COPY --from=build /src/aelig-mail ./aelig-mail
 COPY --from=caddy /usr/bin/caddy /usr/bin/caddy
 COPY config.toml.sample ./config.toml
 COPY --chmod=755 docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
-COPY --chmod=755 railway/start.sh /usr/local/bin/start-listmonk
+COPY --chmod=755 railway/start.sh /usr/local/bin/start-aelig-mail
 COPY railway/Caddyfile /etc/caddy/Caddyfile
 
-ENV LISTMONK_app__address=127.0.0.1:9000
 EXPOSE 8080
 ENTRYPOINT ["/sbin/tini", "-g", "--", "docker-entrypoint.sh"]
-CMD ["start-listmonk"]
+CMD ["start-aelig-mail"]
