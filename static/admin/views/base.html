@@ -24,11 +24,7 @@
 	</script>
 	<script src="{{ URI "/admin/custom.js" }}?v={{ .CustomAssetVersion }}" defer></script>
 
-	{{ if ne .FaviconURL "" }}
-		<link rel="icon" href="{{ .FaviconURL }}" type="image/x-icon" />
-	{{ else }}
-		<link rel="icon" href="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" type="image/svg+xml" />
-	{{ end }}
+	<link rel="icon" href="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" type="image/svg+xml" />
 {{ end }}
 
 {{ define "admin-header" }}
@@ -37,6 +33,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>{{ .Data.Title }} · AELIG Mail</title>
+	<meta name="description" content="AELIG Mail helps you manage newsletters, mailing lists, and email campaigns." />
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 	{{ template "admin-head-assets" . }}
 </head>
