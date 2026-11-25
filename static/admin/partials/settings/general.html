@@ -1,26 +1,7 @@
 {{ define "settings-general" -}}
 <div class="settings-items">
-	<fieldset class="card" data-keywords="site name logo favicon language locale branding title">
+	<fieldset class="card" data-keywords="language locale">
 		<legend>{{ .L.T "globals.terms.general" }}</legend>
-		<label data-field>
-			{{ .L.T "settings.general.siteName" }}
-			<input name="app.site_name" maxlength="300" required x-model="form['app.site_name']" />
-		</label>
-
-
-		<label data-field>
-			{{ .L.T "settings.general.logoURL" }}
-			<input name="app.logo_url" type="url" pattern="https?://.*" maxlength="300"
-				placeholder="https://mail.example.com/logo.png" x-model="form['app.logo_url']" />
-			<small data-hint>{{ .L.T "settings.general.logoURLHelp" }}</small>
-		</label>
-
-		<label data-field>
-			{{ .L.T "settings.general.faviconURL" }}
-			<input name="app.favicon_url" type="url" pattern="https?://.*" maxlength="300"
-				placeholder="https://mail.example.com/favicon.png" x-model="form['app.favicon_url']" />
-			<small data-hint>{{ .L.T "settings.general.faviconURLHelp" }}</small>
-		</label>
 		<div data-field>
 			<label for="app-lang">{{ .L.T "globals.fields.language" }}</label>
 			<select id="app-lang" name="app.lang" x-model="form['app.lang']">

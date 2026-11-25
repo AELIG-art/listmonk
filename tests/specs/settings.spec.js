@@ -91,9 +91,10 @@ test.describe('Settings', () => {
 
   test('saves edits across tabs, enables SMTP and deletes a server', async ({ page }) => {
     const root = 'http://127.0.0.1:9000';
-    const favicon = `${root}/public/static/logo.png`;
     await page.locator('[name="app.root_url"]').fill(root);
-    await page.locator('[name="app.favicon_url"]').fill(favicon);
+    for (const key of ['app.site_name', 'app.logo_url', 'app.favicon_url']) {
+      await expect(page.locator(`[name="${key}"]`)).toHaveCount(0);
+    }
     await tab(page, 'Performance').click();
     await page.locator('[name="app.concurrency"]').fill('9');
     await tab(page, 'SMTP').click();
@@ -114,14 +115,13 @@ test.describe('Settings', () => {
     await expect(servers.getByRole('button', { name: 'Delete' })).toBeHidden();
     await save(page);
     expect(await settings(page)).toMatchObject({
-      'app.root_url': root, 'app.favicon_url': favicon, 'app.concurrency': 9,
+      'app.root_url': root, 'app.concurrency': 9,
       smtp: [{ enabled: true, host: 'localhost', port: 1025, tls_type: 'none' }],
     });
     await page.reload();
     await expect(servers.getByRole('switch', { name: 'Enabled', exact: true })).toBeChecked();
     await tab(page, 'General').click();
     await expect(page.locator('[name="app.root_url"]')).toHaveValue(root);
-    await expect(page.locator('[name="app.favicon_url"]')).toHaveValue(favicon);
     await tab(page, 'Performance').click();
     await expect(page.locator('[name="app.concurrency"]')).toHaveValue('9');
   });
@@ -320,25 +320,19 @@ test.describe('Settings', () => {
 
   test('saves independent admin and public appearance editors', async ({ page }) => {
     await tab(page, 'Appearance').click();
-    const css = page.getByRole('group', { name: 'Custom CSS', exact: true }).getByRole('textbox');
+    await expect(page.locator('code-editor[lang="css"]')).toHaveCount(0);
     const js = page.getByRole('group', { name: 'Custom JavaScript', exact: true }).getByRole('textbox');
-    await css.fill('/* admin settings test */');
     await js.fill('// admin settings test');
     await tab(page, 'Public').click();
-    await css.fill('/* public settings test */');
     await js.fill('// public settings test');
     await save(page);
     expect(await settings(page)).toMatchObject({
-      'appearance.admin.custom_css': '/* admin settings test */',
       'appearance.admin.custom_js': '// admin settings test',
-      'appearance.public.custom_css': '/* public settings test */',
       'appearance.public.custom_js': '// public settings test',
     });
     await page.reload();
-    await expect(css).toHaveText('/* admin settings test */');
     await expect(js).toHaveText('// admin settings test');
     await tab(page, 'Public').click();
-    await expect(css).toHaveText('/* public settings test */');
     await expect(js).toHaveText('// public settings test');
   });
 
