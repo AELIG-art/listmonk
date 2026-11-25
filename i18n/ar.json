@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "CSS و JavaScript مخصص للصفحات العامة.",
     "settings.bounces.azureSharedSecret": "السر المشترك لـ Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "اسم رأس Azure Shared Secret",
-    "settings.bounces.azureSharedSecretHeaderHelp": "اسم رأس HTTP اختياري لقراءة السر المشترك الخاص بـ Azure. إذا كان فارغًا، يستخدم AMS X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "اسم رأس HTTP اختياري لقراءة السر المشترك الخاص بـ Azure. إذا كان فارغًا، يستخدم AELIG Mail X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "قدم السر المشترك المهيأ لنقطة نهاية webhook الخاصة بـ Azure Event Grid.",
     "settings.bounces.count": "عدد الارتدادات",
     "settings.bounces.countHelp": "عدد الارتدادات لكل مشترك",

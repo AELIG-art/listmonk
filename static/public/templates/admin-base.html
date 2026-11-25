@@ -3,7 +3,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />	
-	<title>{{ .Data.Title }} · AMS</title>
+	<title>{{ .Data.Title }} · AELIG Mail</title>
 	<meta name="description" content="{{ .Data.Description }}" />
 	<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 	<meta name="color-scheme" content="light dark" />
@@ -43,7 +43,7 @@
 				{{ if ne .LogoURL "" }}
 					<img src="{{ .LogoURL }}" alt="{{ .Data.Title }}" />
 				{{ else }}
-					<img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AMS</strong><small>AELIG Mailing System</small></span>
+					<img src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AELIG</strong> Mail</span>
 				{{ end }}
 				</a>
 			</div>

@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Julkisiin sivuihin sovellettava mukautettu CSS ja JavaScript.",
     "settings.bounces.azureSharedSecret": "Azure Event Gridin jaettu salaisuus",
     "settings.bounces.azureSharedSecretHeader": "Azure jaetun salaisuuden otsikon nimi",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Valinnainen HTTP-otsikon nimi, josta luetaan Azure jaettu salaisuus. Jos tyhjä, AMS käyttää X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Valinnainen HTTP-otsikon nimi, josta luetaan Azure jaettu salaisuus. Jos tyhjä, AELIG Mail käyttää X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Anna jaettu salaisuus, joka on määritetty Azure Event Gridin webhook-päätepisteellesi.",
     "settings.bounces.count": "Bouncemittari",
     "settings.bounces.countHelp": "Bounce lukumäärä tilaajaa kohden",

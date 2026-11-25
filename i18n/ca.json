@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "CSS i JavaScript personalitzats per aplicar-los a les pàgines públiques.",
     "settings.bounces.azureSharedSecret": "Clau compartida Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Nom de capçalera de clau compartida Azure",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Nom de la capçalera HTTP opcional per llegir la clau compartida d'Azure. Si està buida, AMS utilitza X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Nom de la capçalera HTTP opcional per llegir la clau compartida d'Azure. Si està buida, AELIG Mail utilitza X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Proporciona la clau compartida configurada per al teu endpoint webhook d'Azure Event Grid.",
     "settings.bounces.count": "Recompte de rebots",
     "settings.bounces.countHelp": "Nombre de rebots per subscriptor",

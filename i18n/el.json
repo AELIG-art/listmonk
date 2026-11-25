@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Προσαρμοσμένο CSS και JavaScript για την εφαρμογή στις δημόσιες σελίδες.",
     "settings.bounces.azureSharedSecret": "Κοινό μυστικό Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Όνομα κεφαλίδας Azure Shared Secret",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Προαιρετικό όνομα HTTP κεφαλίδας για ανάγνωση του Azure shared secret. Αν είναι κενό, το AMS χρησιμοποιεί X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Προαιρετικό όνομα HTTP κεφαλίδας για ανάγνωση του Azure shared secret. Αν είναι κενό, το AELIG Mail χρησιμοποιεί X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Παρέχετε το shared secret που έχει ρυθμιστεί για το webhook endpoint του Azure Event Grid.",
     "settings.bounces.count": "Πλήθος bounce",
     "settings.bounces.countHelp": "Αριθμός bounce ανά συνδρομητή",

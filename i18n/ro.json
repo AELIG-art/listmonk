@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "CSS personalizat și JavaScript să se aplice la paginile publice.",
     "settings.bounces.azureSharedSecret": "Cheia partajată Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Numele antetului cheii partajate Azure",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Numele opțional al antetului HTTP din care se citește cheia partajată Azure. Dacă este gol, AMS folosește X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Numele opțional al antetului HTTP din care se citește cheia partajată Azure. Dacă este gol, AELIG Mail folosește X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Furnizați cheia partajată configurată pentru endpoint-ul webhook Azure Event Grid.",
     "settings.bounces.count": "Bounce conta",
     "settings.bounces.countHelp": "Numărul de bounce-uri per abonat",

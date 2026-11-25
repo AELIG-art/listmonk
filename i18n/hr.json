@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Prilagođeni CSS i JavaScript koji se primjenjuju na javne stranice.",
     "settings.bounces.azureSharedSecret": "Zajednička tajna za Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Naziv zaglavlja zajedničke tajne za Azure",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Neobavezni naziv HTTP zaglavlja iz kojeg se čita Azureova zajednička tajna. Ako je prazno, AMS koristi X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Neobavezni naziv HTTP zaglavlja iz kojeg se čita Azureova zajednička tajna. Ako je prazno, AELIG Mail koristi X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Unesi zajedničku tajnu konfiguriranu za krajnju točku Azure Event Grid webhooka.",
     "settings.bounces.count": "Broj odbijenih poruka",
     "settings.bounces.countHelp": "Broj odbijenih poruka po pretplatniku",

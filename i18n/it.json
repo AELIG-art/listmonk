@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "CSS e JavaScript personalizzati da applicare alle pagine pubbliche.",
     "settings.bounces.azureSharedSecret": "Segreto condiviso di Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Nome header Azure Shared Secret",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Nome opzionale dell'header HTTP da cui leggere il segreto condiviso Azure. Se vuoto, AMS utilizza X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Nome opzionale dell'header HTTP da cui leggere il segreto condiviso Azure. Se vuoto, AELIG Mail utilizza X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Fornisci il segreto condiviso configurato per il tuo endpoint webhook Azure Event Grid.",
     "settings.bounces.count": "Numero di rimbalzi",
     "settings.bounces.countHelp": "Numero di rimbalzi per iscritto",

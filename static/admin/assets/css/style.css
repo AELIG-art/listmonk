@@ -754,24 +754,25 @@ aside[data-sidebar] {
     }
 }
 
-/* AMS identity and workspace hierarchy */
+/* Brand identity and workspace hierarchy */
 .sidebar-branding a, .auth-logo a {
     display: inline-flex;
     align-items: center;
     gap: .75rem;
 }
 .brand-name {
-    display: grid;
-    gap: .125rem;
-    text-align: start;
     color: var(--foreground);
+    font-family: var(--font-sans);
+    font-size: 1.25rem;
+    font-weight: 400;
+    letter-spacing: -.025em;
     line-height: 1.15;
+    white-space: nowrap;
 }
 .brand-name strong {
-    font-size: 1.375rem;
-    letter-spacing: -.045em;
+    font-weight: 650;
 }
-.brand-name small, .dashboard-date {
+.dashboard-date {
     color: var(--muted-foreground);
     font-size: .8125rem;
     font-weight: 500;

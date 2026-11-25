@@ -1,7 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="AMS">
-  <rect width="48" height="48" rx="11" fill="#202e49"/>
-  <g fill="none" stroke="#fff" stroke-width="2.6" stroke-linejoin="round">
-    <rect x="9" y="14" width="30" height="21" rx="3"/>
-    <path d="m11 16 11.2 8.8a3 3 0 0 0 3.6 0L37 16"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-label="AELIG Mail">
+  <g fill="#3347aa">
+    <path d="M3 25C15 25 13 6 28 6h9C23 6 25 25 11 25Z"/>
+    <path d="M7 34c14 0 12-19 26-19h9c-14 0-12 19-26 19Z"/>
+    <path d="M12 43c14 0 12-19 26-19h8c-13 0-11 19-25 19Z"/>
   </g>
+  <style>@media (prefers-color-scheme: dark) { g { fill: #879be9 } }</style>
 </svg>

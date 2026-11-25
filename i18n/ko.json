@@ -698,7 +698,7 @@
     "users.apiOneTimeToken": "API 액세스 토큰을 지금 복사하세요. 다시 표시되지 않습니다.",
     "users.cantDeleteRole": "사용 중인 역할은 삭제할 수 없습니다.",
     "users.changeEmail": "이메일 주소 변경",
-    "users.emailChangeInfo": "AMS 계정의 이메일 주소를 {old}에서 {new}(으)로 변경하는 것을 확인해 주세요. 이 변경을 요청하지 않았다면 이 이메일을 무시하세요.",
+    "users.emailChangeInfo": "AELIG Mail 계정의 이메일 주소를 {old}에서 {new}(으)로 변경하는 것을 확인해 주세요. 이 변경을 요청하지 않았다면 이 이메일을 무시하세요.",
     "users.emailChangeRateLimit": "인증 이메일을 다시 요청하려면 1분 동안 기다려 주세요.",
     "users.emailChangeSent": "새 이메일 주소로 보낸 인증 링크를 클릭하세요. 확인 후 이 페이지를 새로고침하세요.",
     "users.emailChanged": "계정의 이메일 주소가 변경되었습니다.",

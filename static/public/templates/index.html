@@ -19,7 +19,7 @@
 	{{ if ne .FaviconURL "" }}
 		<link rel="icon" href="{{ .FaviconURL }}" type="image/x-icon" />
 	{{ else }}
-		<link rel="icon" href="/public/static/favicon.png?v={{ .AssetVersion }}" type="image/png" />
+		<link rel="icon" href="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" type="image/svg+xml" />
 	{{ end }}
 </head>
 <body>
@@ -30,7 +30,7 @@
 				{{ if ne .LogoURL "" }}
 					<img src="{{ .LogoURL }}" alt="{{ .Data.Title }}" />
 				{{ else }}
-					<img class="default-logo" src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AMS</strong><small>AELIG Mailing System</small></span>
+					<img class="default-logo" src="{{ URI "/admin/static/logo.svg" }}?v={{ .AssetVersion }}" alt="" /><span class="brand-name"><strong>AELIG</strong> Mail</span>
 				{{ end }}
 				</a>
 			</div>

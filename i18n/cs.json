@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Volitelné CSS a JavaScript aplikované na veřejné stránky.",
     "settings.bounces.azureSharedSecret": "Společné tajemství Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Název HTTP hlavičky sdíleného tajemství Azure",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Volitelný název HTTP hlavičky pro čtení sdíleného tajemství Azure. Pokud je prázdný, AMS používá X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Volitelný název HTTP hlavičky pro čtení sdíleného tajemství Azure. Pokud je prázdný, AELIG Mail používá X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Zadejte sdílené tajemství nakonfigurované pro váš webhook endpoint Azure Event Grid.",
     "settings.bounces.count": "Počet případů nedoručitelnosti",
     "settings.bounces.countHelp": "Počet případů nedoručitelnosti na odběratele",

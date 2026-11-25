@@ -491,7 +491,7 @@
     "settings.appearance.publicHelp": "Персонализиран CSS и JavaScript, който да се приложи към публичните страници.",
     "settings.bounces.azureSharedSecret": "Споделен секрет на Azure Event Grid",
     "settings.bounces.azureSharedSecretHeader": "Име на заглавка за споделен секрет на Azure",
-    "settings.bounces.azureSharedSecretHeaderHelp": "Опционално име на HTTP заглавка за четене на споделения секрет на Azure. Ако е празно, AMS използва X-Listmonk-Webhook-Secret.",
+    "settings.bounces.azureSharedSecretHeaderHelp": "Опционално име на HTTP заглавка за четене на споделения секрет на Azure. Ако е празно, AELIG Mail използва X-Listmonk-Webhook-Secret.",
     "settings.bounces.azureSharedSecretHelp": "Посочете споделения секрет, конфигуриран за вашия Azure Event Grid webhook крайна точка.",
     "settings.bounces.count": "Брой bounces",
     "settings.bounces.countHelp": "Брой bounces на абонат",
