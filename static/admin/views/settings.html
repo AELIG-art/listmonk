@@ -41,7 +41,6 @@
 					<button type="button" role="tab" id="smtp">{{ .L.T "settings.smtp.name" }}</button>
 					<button type="button" role="tab" id="bounces">{{ .L.T "globals.terms.bounces" }}</button>
 					<button type="button" role="tab" id="messengers">{{ .L.T "settings.messengers.name" }}</button>
-					<button type="button" role="tab" id="appearance">{{ .L.T "globals.terms.appearance" }}</button>
 				</div>
 
 				<div class="sidebar-content" role="tabpanel">{{ template "settings-general" . }}</div>
@@ -52,7 +51,6 @@
 				<div class="sidebar-content" role="tabpanel">{{ template "settings-smtp" . }}</div>
 				<div class="sidebar-content" role="tabpanel">{{ template "settings-bounces" . }}</div>
 				<div class="sidebar-content" role="tabpanel">{{ template "settings-messengers" . }}</div>
-				<div class="sidebar-content" role="tabpanel">{{ template "settings-appearance" . }}</div>
 			</ot-tabs>
 		</div>
 </form>

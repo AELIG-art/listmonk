@@ -318,23 +318,7 @@ test.describe('Settings', () => {
     await expect(page.getByRole('group', { name: 'SES', exact: true })).toHaveCount(0);
   });
 
-  test('saves independent admin and public appearance editors', async ({ page }) => {
-    await tab(page, 'Appearance').click();
-    await expect(page.locator('code-editor[lang="css"]')).toHaveCount(0);
-    const js = page.getByRole('group', { name: 'Custom JavaScript', exact: true }).getByRole('textbox');
-    await js.fill('// admin settings test');
-    await tab(page, 'Public').click();
-    await js.fill('// public settings test');
-    await save(page);
-    expect(await settings(page)).toMatchObject({
-      'appearance.admin.custom_js': '// admin settings test',
-      'appearance.public.custom_js': '// public settings test',
-    });
-    await page.reload();
-    await expect(js).toHaveText('// admin settings test');
-    await tab(page, 'Public').click();
-    await expect(js).toHaveText('// public settings test');
-  });
+
 
 });
 
